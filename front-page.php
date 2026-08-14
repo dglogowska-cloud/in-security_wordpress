@@ -1,25 +1,27 @@
 <?php
 /*
  * Treść in-security — LoRa-based tracking do weryfikacji obchodów ochrony.
- * Kafelki (image => '') czekają na zrzuty ekranu z aplikacji; podmienić na
- * ścieżki do assets/images/ gdy zrzuty będą gotowe.
+ * Kafelki mają tymczasowe grafiki wygenerowane AI (assets/images/*.jpg) —
+ * podmienić na zrzuty ekranu z aplikacji, gdy będą dostępne.
  */
 get_header();
+
+$tiles_dir = get_template_directory_uri() . '/assets/images/';
 
 $tiles = [
     [
         'title'   => 'Checkpoint & Schedule Configuration',
-        'image'   => '',
+        'image'   => $tiles_dir . 'checkpoints-configuration.jpg',
         'content' => 'Define the checkpoints a patrol route must cover across your facility and assign the exact time each one should be reached. Adjust time and distance buffers to match your site\'s layout and security requirements.',
     ],
     [
         'title'   => 'Automatic Patrol Verification',
-        'image'   => '',
+        'image'   => $tiles_dir . 'patrol-verification.jpg',
         'content' => 'Confirm whether a patrol was completed — and completed on time — without manual check-ins or paper logs. Every checkpoint is verified against real tracker data from the field.',
     ],
     [
         'title'   => 'Statistics & Route Optimization',
-        'image'   => '',
+        'image'   => $tiles_dir . 'statistics.jpg',
         'content' => 'Analyze historical patrol data to spot missed checkpoints, recurring delays or inefficient routes, and refine schedules and processes based on real-world performance.',
     ],
 ];
