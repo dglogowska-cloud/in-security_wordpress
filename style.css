@@ -1,0 +1,3269 @@
+/*Theme Name: IN Security Theme
+Author: IndoorNavi
+Description: Motyw in-security — forkowany z in-monitoring (header/footer/tokeny wspólne z marką).
+Placeholder tymczasowy, do czasu docelowego redesignu; sekcje poniżej dziedziczone
+z in-monitoring/in-safety zostały celowo zachowane nietknięte (współdzielony reset/header/nav/
+mobile-menu/legal), nieużywane selektory z innych podstron po prostu nie mają dopasowania w DOM.
+Version: 0.1
+Text Domain: indoornavi
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&family=Roboto+Mono:wght@500;700&display=swap&font-display=swap');
+:root {
+
+    --primary-bg: #0b1116;
+    --canva-blue: #0070f3;
+    --canva-blue-hover: #0058cc;
+    --text-white: #ffffff;
+    --section-light: #f8f9fa;
+}
+html {
+
+    scroll-behavior: smooth;
+    scroll-padding-top: 60px; /* wysokość stałego (fixed) headera, żeby kotwice nie chowały się pod nim */
+    /* overflow-y: scroll; */
+}
+
+.btn {
+
+    display: inline-block;
+    min-width: 220px;
+    padding: 14px 36px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    text-align: center;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+/* Wersja Niebieska (Główna) */
+
+.btn-primary {
+
+    background-color: var(--canva-blue);
+    color: #fff !important;
+    border-color: var(--canva-blue);
+}
+/* Wersja Outline (Przezroczysta z obramowaniem) */
+
+.btn-outline {
+
+    background-color: transparent;
+    color: #fff !important;
+    border-color: #fff;
+}
+/* WSPÓLNY EFEKT HOVER DLA WSZYSTKICH PRZYCISKÓW */
+
+.btn:hover {
+
+    filter: brightness(1.1);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+.btn-outline:hover {
+
+    background-color: #fff;
+    color: #000 !important;
+}
+
+/* OGÓLNE USTAWIENIA */
+
+* {
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--primary-bg);
+    color: var(--text-white);
+    line-height: 1.6;
+    padding-top: 60px;
+    overflow-y: scroll;
+   
+
+}
+main {
+
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    gap: 0;
+}
+/* Dodatkowo upewnij się, że sekcje nie mają marginesów */
+
+section {
+
+    margin: 0;
+    padding: 100px 0; /* To steruje oddechem wewnątrz sekcji, nie na zewnątrz */
+
+}
+.container {
+
+    width: 100%;
+    padding: 0 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+/* --- NAWIGACJA (FIX) --- */
+
+header {
+
+    background: rgba(0, 0, 0, 0.50);
+    position: fixed;
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    height: 60px; /* Stała wysokość paska */
+
+    display: flex;
+    align-items: center;
+}
+.header-container {
+
+    display: flex;
+    justify-content: space-between; /* To rozpycha Logo i Menu na boki */
+    align-items: center;
+    width: 100%;
+    padding: 0 5%;
+}
+.logo {
+    width: auto;
+    min-width: max-content;
+}
+
+/* Pudełko układające oba linki obok siebie */
+.logo-wrapper {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 12px; /* Odstęp między obrazkiem a tekstem */
+}
+
+/* Kontener dla obrazka */
+.logo-img-link {
+    display: flex;
+    align-items: center;
+}
+
+/* Sam obrazek logo */
+.logo-img {
+    display: block;
+    max-height: 70px; 
+    width: auto;
+}
+
+/* Kontener dla tekstu - usuwamy podkreślenie linku */
+.logo-text-link {
+    text-decoration: none !important;
+}
+
+/* Tekst obok logo */
+.logo-text {
+    color: #ffffff;
+    /* font-family: 'Roboto Mono', monospace; */
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    white-space: nowrap; /* Zapobiega spadaniu tekstu pod logo */
+    transition: text-shadow 0.3s ease; 
+}
+
+/* Technologiczny "Glow" aktywowany tylko po najechaniu na tekst */
+.logo-text-link:hover .logo-text {
+    text-shadow: 0 0 10px rgba(33, 150, 243, 0.8), 0 0 20px rgba(33, 150, 243, 0.4);
+}
+
+nav ul {
+
+    display: flex;
+    list-style: none;
+    gap: 3rem;
+}
+nav a {
+
+    text-decoration: none;
+    color: var(--text-white);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.3s;
+}
+nav a:hover {
+
+    color: var(--canva-blue);
+}
+/* --- HERO SECTION --- */
+
+.hero {
+
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: url('background.jpg') no-repeat center right/cover;
+}
+.hero-content {
+
+    padding-left: 5%;
+    max-width: 850px;
+}
+.hero h1 {
+
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+}
+.hero p {
+
+    font-size: 1.2rem;
+    margin-bottom: 3rem;
+    font-weight: 400;
+}
+/* PRZYCISKI */
+
+.cta-group { display: flex; gap: 1.5rem; }
+
+.btn {
+
+    min-width: 220px;
+    padding: 14px 36px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: 0.3s;
+    text-align: center;
+}
+
+.btn-outline { border: 2px solid #fff; color: #fff; }
+
+.btn-outline:hover { background: #fff; color: #000; }
+
+.btn-primary-blue { background: var(--canva-blue); color: #fff; border: 2px solid var(--canva-blue); }
+
+.btn-primary-blue:hover { filter: brightness(1.2); transform: translateY(-2px); }
+/* SEKCJE Z ODDECHEM (10vh paddingu) */
+
+.services, .regulated-markets, .engagement-models {
+
+    padding: 80px 0;
+}
+/* =================================================
+
+   SEKCJA 2: SERVICES - FINALNA WERSJA (BEZ DZIUR)
+
+   ================================================= */
+.services {
+
+    background-color: var(--section-light) !important;
+    background-image: url('pattern-top.svg');
+    /* ZMIANA: Z 100vh na 0 lub auto, aby wysokość wynikała z treści i paddingu */
+    min-height: auto;
+    display: flex;
+    align-items: center;
+    /* ZWIĘKSZONY PADDING: daje "oddech" sekcji, ale nie rozciąga jej na siłę */
+    padding: 120px 0;
+    color: #000000;
+}
+.services h2 {
+
+    color: #000000 !important;
+    font-size: 3rem !important; /* Spójne z sekcją 3 */
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+}
+.section-subtitle {
+
+    color: #444444 !important;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem !important; /* MNIEJSZY odstęp do okienek */
+    max-width: 750px;
+}
+.services-grid {
+
+    display: grid;
+    grid-template-columns: repeat(3, 310px);
+    gap: 25px;
+    justify-content: flex-start;
+}
+.service-card {
+
+    background: #ffffff !important;
+    padding: 1rem 1.5rem 1.5rem 1.5rem !important;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    height: auto !important;
+    min-height: unset !important;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border: 1px solid rgba(0,0,0,0.05);
+}
+.service-card:hover {
+
+    /* Uniesienie karty (zostaje bez zmian) */
+
+    transform: translateY(-12px);
+   
+
+    /* GŁÓWNA ZMIANA: Zamiast niebieskiej ramki, dajemy głęboki, miękki cień */
+
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15) !important;
+   
+
+    /* Usuwamy zmianę koloru ramki (zostaje szara lub znika) */
+
+    border-color: rgba(0, 0, 0, 0.05) !important;
+}
+.service-card h3 {
+
+    color: #000000 !important;
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-bottom: 1.2rem !important;
+    text-transform: uppercase;
+}
+.tags {
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.tag {
+
+    background: var(--canva-blue);
+    color: #ffffff !important;
+    padding: 10px 16px !important; /* Puszyste pigułki z Canvy */
+    border-radius: 8px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1;
+}
+/* --- SEKCJA 3: REGULATED MARKETS --- */
+
+.regulated-markets {
+
+    background-color: #0b151e;
+    min-height: auto;
+    display: flex;
+    align-items: center;
+    padding: 120px 0;
+    color: #ffffff;
+}
+/* Upewnijmy się, że kontener wewnątrz też nie wymusza środkowania */
+
+.regulated-markets .container {
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.regulated-markets h2 {
+
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 4vh;
+    letter-spacing: -1px;
+}
+.numbered-grid {
+
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    /* Szerokość dopasowana idealnie do 3 okienek z sekcji powyżej */
+
+    width: 980px;
+    max-width: 980px;
+    margin: 0; /* Wyrównanie do lewej strony kontenera */
+
+    align-items: flex-start;
+}
+.numbered-block {
+
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    /* Padding: dół i góra bez zmian, lewy padding mniejszy, by tekst był bliżej */
+
+    padding: 30px;
+    width: 100%;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.numbered-block .number {
+
+    font-family: 'Roboto Mono', monospace;
+    font-size: 5.5rem;
+    font-weight: 700;
+    color: transparent;
+    -webkit-text-stroke: 3px var(--canva-blue);
+    opacity: 0.9;
+    /* Zmniejszony margines między cyfrą a tekstem */
+
+    min-width: 110px;
+    margin-right: 25px !important;
+    line-height: 1;
+}
+.numbered-block p {
+
+    color: #f0efef;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    text-align: justify;
+}
+.numbered-block.alternate {
+
+    flex-direction: row;
+}
+
+.numbered-block.alternate .numbered-block-content {
+
+    text-align: left;
+}
+
+.numbered-block.alternate .number {
+
+    margin-left: 0;
+    margin-right: 25px;
+}
+
+.numbered-block:hover {
+
+    background: rgba(33, 150, 243, 0.1);
+    border-color: var(--canva-blue);
+    transform: scale(1.02);
+}
+/* --- SEKCJA: ENGINEERING JOURNEY (OUR ROADMAP) --- */
+#engineering-journey {
+    padding: 80px 0;
+    background-color: #ffffff;
+    background-image: url('pattern-top.svg');
+    background-position: center top;
+    background-repeat: no-repeat;
+}
+
+/* Wymuszenie stylów dla kontenera w tej konkretnej sekcji (opcjonalne, jeśli .container masz już zdefiniowany globalnie) */
+#engineering-journey .container {
+    max-width: 1200px;
+    margin: 0 auto; /* Poprawiona literówka z '20 auto' */
+    padding: 0 20px;
+}
+
+/* --- NAGŁÓWEK SEKCJI (Tytuł i opis) --- */
+.roadmap-intro {
+    max-width: 700px;
+    margin-bottom: 40px;
+}
+
+.roadmap-intro h2 {
+    font-size: 3.2rem;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.roadmap-intro p {
+    color: #666666;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin-top: 0;
+}
+
+
+/* --- SEKCJA: STRATEGIC ENGAGEMENT MODELS (FIX TŁA I WYSOKOŚCI) --- */
+
+.engagement-models {
+    position: relative;
+    background-color: #f8f9fa; /* Twój obecny kolor tła */
+    background-image: url('pattern-top.svg');
+    background-repeat: no-repeat;
+    background-position: bottom center; /* Grafika będzie na dole sekcji */
+    background-size: contain; /* Lub 'cover' jeśli ma zajmować całą szerokość */
+    padding-bottom: 120px;
+    min-height: auto !important;
+    padding: 120px 0 !important;
+    display: block; /* Zmieniamy z flex na block dla poprawnego ułożenia kontenera */
+
+}
+.engagement-models .container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+/* Tytuł i podtytuł w czarnym kolorze na jasnym tle */
+
+.engagement-models h2 {
+
+    color: #000000 !important;
+    font-size: 3rem !important; /* Rozmiar identyczny z Built for High-Stakes */
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    text-align: left;
+    letter-spacing: -1px;
+}
+.engagement-models .section-subtitle {
+
+    color: #444444 !important;
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 1rem !important; /* Odstęp spójny z resztą strony */
+    max-width: 750px;
+    line-height: 1.4;
+    text-align: left;
+}
+.engagement-grid {
+
+    display: flex;
+    gap: 30px;
+    width: 980px; /* Szerokość spójna z sekcją 2 i 3 */
+    margin-top: 20px;
+    align-items: flex-start;
+}
+/* LEWE MENU */
+
+.engagement-menu {
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 320px;
+}
+.menu-item {
+
+    background: #0b151e !important;
+    color: #ffffff !important;
+    border: none;
+    padding: 22px 25px;
+    border-radius: 10px;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: 0.3s;
+    position: relative;
+
+}
+.menu-item.active {
+
+    background: #111d29 !important;
+    padding-left: 30px;
+}
+.menu-item.active::before {
+
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 25%;
+    height: 50%;
+    width: 4px;
+    background-color: var(--canva-blue);
+    border-radius: 0 4px 4px 0;
+}
+/* GŁÓWNE OKNO TREŚCI */
+
+.model-content {
+
+    background: #0b151e !important;
+    color: #ffffff !important;
+    padding: 30px;
+    border-radius: 15px;
+    flex-grow: 1;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+    min-height: 400px; /* Zapewnia stabilność przy zmianie treści */
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    opacity: 1;
+}
+.model-content.switching {
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+.model-tag {
+
+    background: var(--canva-blue);
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+.model-description {
+
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+.key-outcomes {
+    border: 3px solid rgba(33, 150, 243, 0.75); /* Subtelna niebieska ramka */
+    padding: 20px;
+    border-radius: 12px;
+}
+.key-outcomes h4 {
+
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+.key-outcomes ul {
+
+    list-style: none;
+    padding: 0;
+}
+.key-outcomes li {
+
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 1px;
+    font-size: 0.95rem;
+    color: #eee;
+}
+.key-outcomes li::before {
+
+    content: "•";
+    color: var(--canva-blue);
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+.partners-carousel {
+
+    background-color: #fff;
+    padding: 100px 0; /* Odpowiednia wysokość sekcji */
+    text-align: center;
+    overflow: hidden;
+    margin: 0 !important; /* Wymuś brak marginesu pod partnerami */
+    border: none !important;
+    display: block;
+}
+.partners-title {
+
+    font-size: 2.5rem !important;
+    font-weight: 800 !important;
+    color: #000;
+    margin-bottom: 80px;
+    letter-spacing: 0;
+}
+.partners-title span {
+
+    color: var(--canva-blue);
+}
+.logo-viewport {
+
+    position: relative;
+    height: 100px; /* Przestrzeń na loga */
+    max-width: 980px;
+    margin: 0 auto;
+}
+.logo-group {
+
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    justify-content: center;
+    gap: 100px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 1.2s ease-in-out; /* Płynne przenikanie */
+
+}
+.logo-group.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.partner-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none; /* Usuwa ewentualne podkreślenia */
+    transition: transform 0.3s ease;
+}
+
+.partner-link:hover {
+    transform: scale(1.1); /* Powiększenie całego linku wraz z obrazkiem */
+}
+
+.partner-logo {
+    max-height: 120px;
+    max-width: 180px;
+    filter: grayscale(100%); /* Loga czarno-białe */
+    opacity: 0.6;
+    transition: 0.3s;
+}
+.partner-logo:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+.partners-footer {
+    margin-top: 80px;
+    text-align: center;
+}
+
+.cta-wrapper-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* Odstęp między rzędem CTA a linkiem poniżej */
+    margin-top: 50px;
+}
+
+.cta-inline-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.cta-text {
+   color: #222222 !important;
+    font-size: 1.25rem;
+    font-weight: 600; 
+
+}.cta-pill {
+
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 32px;
+    border: 2px solid var(--canva-blue);
+    border-radius: 10px;
+    color: var(--canva-blue);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+/* EFEKT HOVER: Pigułka wypełnia się kolorem, a strzałka się przesuwa */
+
+.cta-pill:hover {
+
+    background-color: var(--canva-blue);
+    color: #ffffff;
+    box-shadow: 0 5px 15px rgba(33, 150, 243, 0.2);
+}
+.cta-pill .arrow {
+
+    transition: transform 0.3s ease;
+}
+.cta-pill:hover .arrow {
+
+    transform: translateX(6px);
+}
+.cta-link-secondary {
+    display: inline-block;
+    margin-top: 20px;
+    color: #888; /* Jaśniejszy szary dla mniejszego kontrastu */
+    text-decoration: none;
+    font-size: 1rem;
+    /* font-style: italic; */
+    transition: color 0.3s ease;
+}
+
+.cta-link-secondary:hover {
+    color: var(--canva-blue);
+    border-bottom: 1px solid var(--canva-blue); /* Podkreślenie tylko po najechaniu */
+}
+
+
+
+
+.final-cta-section {
+
+    position: relative;
+    width: 100%;
+    margin-top: 0px !important;
+    margin-bottom: -1px !important; /* Wymusza lekkie nachodzenie na stopkę, co likwiduje szparę */
+    padding: 250px 0;
+    background-color: #0b1116;
+    background-image: url('background-cta.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Parallax przywrócony */
+    color: #ffffff;
+    text-align: center;
+    display: block;
+    z-index: 1; /* Upewnia się, że sekcja jest nad tłem strony */
+
+}
+.cta-content h2 {
+
+    font-size: 3.4rem;
+    font-weight: 800;
+    margin-bottom: 5px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3); /* Delikatny cień dla pewności czytelności */
+
+}
+.cta-content p {
+
+    font-size: 1.9rem;
+    margin-bottom: 45px;
+    font-weight: 400;
+    text-shadow: 0 1px 5px rgba(0,0,0,0.3);
+}
+
+
+.cta-roadmap-hint {
+    color: rgba(255, 255, 255, 0.979) !important;
+    font-size: 1.2rem;
+    margin: 0;
+    /* Miękki cień pod tekstem, który tworzy kontrast z jasnymi ścieżkami na zdjęciu */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); 
+    font-family: 'Inter', sans-serif;
+}
+
+/* Styl dla samego linku */
+.roadmap-subtle-link {
+    color: #fff !important;
+    text-decoration: none;
+    font-weight: 650;
+    margin-left: 6px;
+    display: inline-flex;
+    align-items: center;
+    /* border-bottom: 1px dashed rgba(255, 255, 255, 0.4); */
+    transition: all 0.3s ease;
+    /* Delikatny blask, aby odróżnić link od reszty tekstu */
+    filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.2));
+}
+
+/* --- EFEKT HOVER --- */
+
+.roadmap-subtle-link:hover {
+    color: var(--canva-blue) !important; /* Twój niebieski kolor przy najechaniu */
+    /* border-bottom: 1px solid var(--canva-blue); */
+    filter: drop-shadow(0 0 8px rgba(33, 150, 243, 0.4));
+}
+
+.cta-arrow {
+    display: inline-block;
+    margin-left: 8px;
+    transition: transform 0.3s ease;
+}
+
+.roadmap-subtle-link:hover .cta-arrow {
+    transform: translateX(5px); /* Strzałka ucieka w prawo */
+}
+
+#contact-footer {
+    flex-shrink: 0;
+    background-color: #0b1116;
+    padding: 1.25rem 0 0.6rem;
+    color: #ffffff;
+}
+
+.footer-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 5%;
+    box-sizing: border-box;
+}
+
+.footer-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.footer-col-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.footer-col-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+}
+
+.footer-contact-details {
+    display: flex;
+    gap: 2.5rem;
+    font-size: 0.88rem;
+    font-weight: 500;
+}
+
+.footer-contact-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-contact-col-phone {
+    justify-content: flex-end;
+    font-size: 0.82rem;
+    line-height: 1.55;
+}
+
+.footer-contact-details a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+    display: block;
+}
+
+.footer-contact-details a:hover {
+    opacity: 0.7;
+}
+
+.footer-address {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.42);
+    font-size: 0.82rem;
+    line-height: 1.55;
+}
+
+.footer-company-name {
+    font-weight: 600;
+}
+
+.linkedin-box {
+    display: inline-flex;
+    color: var(--canva-blue);
+    margin-bottom: 0.75rem;
+    transition: color 0.2s ease;
+}
+
+.linkedin-box svg {
+    width: 30px;
+    height: 30px;
+    display: block;
+}
+
+.linkedin-box:hover {
+    color: var(--canva-blue-hover);
+}
+
+.footer-nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5rem 1.5rem;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-nav a {
+    color: rgba(255, 255, 255, 0.65);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 400;
+    transition: color 0.2s ease;
+}
+
+.footer-nav a:hover {
+    color: #ffffff;
+}
+
+.footer-legal {
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.28);
+    text-align: right;
+    line-height: 1.6;
+}
+
+.footer-legal p {
+    margin: 0 0 0.2rem;
+}
+
+.footer-legal a {
+    color: inherit;
+    text-decoration: underline;
+    transition: opacity 0.2s ease;
+}
+
+.footer-legal a:hover {
+    opacity: 0.7;
+}
+
+.legal-separator {
+    margin: 0 0.3rem;
+}
+
+
+
+/*====================== Hero Podstrony Case Studies ====================*/
+
+.page-hero {
+    background-image: url('background.jpg'); /* Podmień na swoją nazwę pliku */
+    background-size: cover;
+    background-position: center;
+    min-height: 500px;
+    display: flex;
+    align-items: center; /* Wyśrodkowanie w pionie */
+    justify-content: flex-start; /* Dosunięcie do lewej w poziomie */
+    padding-top: 80px;
+    padding-bottom: 80px;
+    text-align: left;
+}
+
+.page-hero .container {
+    width: 100%;
+    max-width: 1200px; /* Taka sama szerokość jak na głównej */
+    margin: 0 auto;
+    padding: 0 15px; /* Przeniesione z HTML: 15px wygrywa z dawnym 40px */
+}
+
+.page-hero .hero-content-wrapper {
+    max-width: 800px;
+    margin-left: 0;
+    text-align: left;
+}
+
+.page-hero h1 {
+    font-size: clamp(3.5rem, 5vw, 4.2rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin: 0 0 20px 0; /* Górny/Lewy 0, Dolny 20px */
+    padding: 0;
+    max-width: 800px; 
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    text-align: left;
+}
+
+.page-hero p {
+    font-size: 1.2rem;
+    max-width: 500px; /* Przeniesione z HTML (węższy blok tekstu) */
+    margin: 0; 
+    padding: 0;
+    color: rgb(255, 255, 255);
+    text-align: left;
+}
+
+.page-hero .cta-group {
+    display: flex;
+    gap: 20px;
+    margin-top: 40px;
+    justify-content: flex-start;
+}
+/* --- Grid Kafelków --- */
+
+.cases-grid-section {
+
+    background: var(--section-light);
+    padding: 40px 0; /* Zmniejszony padding sekcji */
+
+}
+.cases-grid {
+
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 30px;
+    min-height: 800px;
+    padding: 20px 0 40px 0;
+    margin-top: 5px;
+    max-width: 1200px;
+}@media (max-width: 1024px) {
+    .cases-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+}
+
+@media (max-width: 768px) {
+    .cases-grid { grid-template-columns: 1fr !important;
+    padding: 15px; }
+    
+
+}
+
+.case-detail-header {
+        grid-template-columns: 1fr; /* Obrazek pod tekstem w detalach */
+        gap: 30px;
+    }
+    
+    .case-detail-body {
+        grid-template-columns: 1fr; /* Kolumny tekstu jedna pod drugą */
+        gap: 40px;
+    }
+
+/* Styl karty */
+
+.case-card {
+
+    background: #ffffff;
+    border-radius: 20px; /* Mocne zaokrąglenie z makiety */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* Miękki cień */
+    overflow: hidden;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.case-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.case-card:hover h3::after {
+    width: 100%; /* Linia rozwija się do pełnej szerokości tekstu */
+
+}
+/* Wrapper na zdjęcie - zapobiega rozjeżdżaniu się gdy obrazka brak */
+
+.case-img-wrapper {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    height: 220px;
+    background: #e0e0e0; /* Kolor zastępczy gdyby obrazek się nie wczytał */
+    overflow: hidden;
+}
+.case-card img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+/* Tekst w karcie */
+
+.card-info {
+
+    padding: 25px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none !important;
+}
+.card-info .client-name {
+
+    display: block !important;
+    font-size: 0.80rem !important;
+    font-weight: 450 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 2px !important;
+    color: #888 !important;
+    margin-bottom: 6px !important;
+    line-height: 1.2 !important;
+}
+.card-info h3 {
+
+    font-size: 1.25rem !important;
+    color: #000 !important;
+    margin: 0 0 15px 0 !important;
+    font-weight: 800 !important;
+    padding: 0 !important;
+    text-decoration: none !important;
+    position: relative;
+    display: inline-block;
+}
+/* Animowana linia (tylko pod H3) */
+
+.card-info h3::after {
+
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 50%;
+    background-color: var(--canva-blue);
+    transition: width 0.3s ease;
+    transform: translateX(-50%);
+}
+.card-info p {
+
+    color: #666 !important;
+    line-height: 1.4 !important;
+    font-size: 0.95rem !important;
+    margin-bottom: 5px;
+    text-decoration: none !important;
+}
+.view-link {
+
+    display: inline-block;
+    margin-top: 10px;
+    color: var(--canva-blue);
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+/* --- Detale Case Study (KOMPLETNA NAPRAWA) --- */
+/* ==========================================================================
+   SEKCJA SZCZEGÓŁOWYCH CASE STUDIES
+   ========================================================================== */
+
+/* Główny kontener strony z Case Studies */
+.detailed-cases {
+    background: #f8f9fa !important;
+    background-color: #f8f9fa !important;
+    position: relative;
+    z-index: 1;
+    padding: 60px 0;
+    width: 100%;
+    display: block;
+    color: #333333 !important; /* Reset na ciemny tekst */
+}
+
+/* Blok pojedynczego Case Study */
+.case-detail-block {
+    padding: 60px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.case-detail-block .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    background: transparent !important;
+}
+
+/* --- NAGŁÓWEK CASE STUDY --- */
+.case-detail-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.header-text-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.case-detail-header h2 {
+    font-size: 2.2rem !important;
+    line-height: 1.2;
+    color: #000000 !important;
+    font-weight: 550;
+    text-align: left;
+    margin: 0;
+}
+
+/* Logo Klienta */
+.client-logo {
+    height: var(--logo-h, 50px); /* Używa zmiennej z HTML, lub 50px jako fallback */
+    width: auto;
+    max-width: 250px;
+    object-fit: contain;
+    display: block;
+    filter: none;
+}
+
+/* Zdjęcie po prawej */
+.detail-img-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.detail-img {
+    width: 100%;
+    height: 200px;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+    border-radius: 12px;
+    margin-top: 5px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+/* --- TREŚĆ GŁÓWNA (BODY) --- */
+.case-detail-body {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 60px;
+    align-items: flex-start;
+}
+
+/* Główne niebieskie nagłówki w kolumnach */
+.case-detail-body h3 {
+    font-size: 1.3rem !important;
+    color: var(--canva-blue) !important;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.case-detail-body p {
+    color: #333333 !important;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* Styl cytatu w Client's Story */
+.case-story-col em {
+    display: block;
+    border-left: 3px solid var(--canva-blue);
+    padding-left: 15px;
+    margin: 15px 0 20px;
+    color: #666666;
+}
+
+/* Sekcja Wpływ na biznes (Business Impact) */
+.case-results {
+    margin-top: 30px;
+}
+
+/* Specyficzny nagłówek dla Business Impact (ciemniejszy, bez uppercase) */
+.case-results h3 {
+    color: #333333 !important; 
+    font-size: 1.1rem !important;
+    text-transform: none;
+    letter-spacing: normal;
+    margin-bottom: 10px;
+}
+
+/* --- Kolumna Kompetencji (Lista) --- */
+.case-expertise-col ul {
+    list-style: none;
+    padding: 0;
+}
+
+.case-expertise-col li {
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 15px;
+    color: #444444 !important;
+    line-height: 1.5;
+    font-size: 1rem;
+}
+
+.case-expertise-col li strong {
+    color: #222222;
+}
+
+.case-expertise-col li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--canva-blue);
+    font-weight: bold;
+}
+
+/* --- NAWIGACJA (Dół Case Study) --- */
+.case-detail-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 1px solid #eeeeee; /* Subtelna linia odcinająca */
+}
+
+/* Przycisk Wstecz */
+.btn-back {
+    color: #888888;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.btn-back:hover {
+    transform: translateX(-5px); /* Subtelne cofnięcie */
+    color: var(--canva-blue);
+}
+
+/* Link kontaktowy (Prawa strona) */
+.contact-link {
+    color: var(--canva-blue);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: opacity 0.3s ease;
+}
+
+.contact-link:hover {
+    opacity: 0.8;
+}
+
+/* Animacja strzałki w linku kontaktowym */
+.contact-link span {
+    font-size: 1.2rem;
+    line-height: 1;
+    transition: transform 0.3s ease;
+}
+
+.contact-link:hover span {
+    transform: translateX(4px); /* Płynne przesunięcie strzałki w prawo */
+}
+
+/* --- STRONA ABOUT Kontener Główny --- */
+.roadmap-wrapper-context {
+    position: relative;
+    width: 100%;
+    padding: 0;
+    margin-top: 50px;
+
+}
+
+/* --- JEDYNA PRZERYWANA LINIA --- */
+.roadmap-connect-line {
+    position: absolute;
+   top: 46px; /* Idealnie przez środek ikon */
+    left: 80px;
+    right: 80px;
+    height: 0 !important;
+    border-top: 2px dashed #eef2f6 !important;
+    background: none !important;
+    z-index: 1;
+}
+
+/* Ukrycie na mobile */
+@media (max-width: 1023px) {
+    .roadmap-connect-line {
+        display: none !important;
+    }
+}
+
+/* --- Układ Kart --- */
+.roadmap-wrapper {
+    display: flex;
+    gap: 20px;
+    align-items: stretch;
+    position: relative;
+    z-index: 2;
+}
+
+/* --- Styl Karty --- */
+.step-card {
+   flex: 1;
+    background: #fff;
+    padding: 30px; /* Równy padding z każdej strony */
+    border-radius: 20px;
+    border: 1.5px solid #eee;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.step-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--canva-blue);
+    box-shadow: 0 10px 30px rgba(33, 150, 243, 0.08);
+}
+
+/* --- Ikona (Przywrócono kolory) --- */
+.step-icon-small {
+    width: 32px;
+    height: 32px;
+    background: #f0f7ff;
+    border: 1px solid #e0efff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0; /* Zapobiega ściskaniu ikony */
+}
+
+.step-icon-small svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--canva-blue); /* Kolor ikony */
+}
+
+/* --- Treść (Przywrócono widoczność i wagi) --- */
+.step-body {
+    flex-grow: 1;
+    margin-bottom: 15px;
+    /* Dodajemy margines po prawej, żeby tekst nie "pchał" się pod ikonę */
+    padding-right: 10px; 
+}
+
+/* --- Nowy kontener nagłówka (DODAJ TO) --- */
+.step-header {
+    display: flex;
+    align-items: center; /* Wyrównanie w pionie */
+    gap: 12px;           /* Odstęp między ikoną a tekstem */
+    margin-bottom: 20px; /* Odstęp od tytułu (np. Audit) */
+}
+
+.step-number {
+    display: inline-block;
+    background: #f0f7ff;
+    color: var(--canva-blue);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.9rem; /* Odrobinę większy dla czytelności */
+    font-weight: 800;
+    margin-bottom: 0; /* Usuwamy margines dolny, bo header go trzyma */
+    text-transform: uppercase;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.step-card h3 {
+    font-size: 1.4rem; /* Odrobinę większy nagłówek */
+    margin-bottom: 12px;
+    font-weight: 800;
+    color: #1a1a1a;
+    letter-spacing: -0.02em; /* Lekkie ściśnięcie liter dla nowoczesnego wyglądu */
+}
+
+.step-card p {
+    font-size: 0.95rem;
+    color: #555; /* Nieco ciemniejszy dla lepszej czytelności */
+    line-height: 1.6; /* Zwiększona interlinia dodaje "oddechu" */
+    margin: 0;
+    text-align: left; /* Standardowo lewa, ale... */
+    /* Opcjonalnie: Justowanie z inteligentnym dzieleniem słów */
+    /* text-align: justify; */ */
+    /* hyphens: auto; */ */ */
+    /* Zapobieganie "wiszącym" spójnikom (jeśli używasz JS lub &nbsp;) */
+}
+
+.step-card p strong {
+    color: #555555; /* Wzmocnienie dla pogrubionego tekstu */
+}
+
+/* Nowy styl dla tagów technologicznych na stronie About */
+.tech-tags-container {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.tech-tag {
+    font-family: 'Roboto Mono', monospace; /* Techniczny font */
+    font-size: 0.8rem;
+    font-weight: 500;
+    /* text-transform: uppercase; */
+    letter-spacing: 0.5px;
+    padding: 4px 10px;
+    background: #f0f2f5; /* Bardzo jasny szary */
+    color: #444;
+    border-radius: 4px; /* Bardzo delikatne zaokrąglenie */
+    border-left: 3px solid var(--canva-blue); /* Akcent w Twoim kolorze blue */
+    display: inline-flex;
+    align-items: center;
+}
+
+/* ==========================================================================
+   SEKCJA KORZYŚCI (BENEFITS BREAKOUT)
+   ========================================================================== */
+
+.benefits-breakout-section {
+    background-image: url('background-cta.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    padding: 120px 0;
+}
+
+.benefits-heading {
+    color: #ffffff;
+    font-size: 3.2rem;
+    margin-bottom: 50px;
+    text-align: left;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    font-weight: 800;
+}
+
+.benefits-glass-card {
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 30px;
+    padding: 60px 60px 40px 60px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    max-width: 1000px;
+    margin-left: 0;
+}
+
+/* Układ siatki (Grid) */
+.benefits-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px 50px;
+}
+
+/* Pojedynczy element korzyści */
+.benefit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+/* Pudełko ikony z jasnobłękitnym tłem */
+.benefit-tickbox-icon {
+    width: 32px;
+    height: 32px;
+    background: #f0f7ff; 
+    border: 1px solid #e0efff;
+    border-radius: 8px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.benefit-tickbox-icon svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--canva-blue);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.benefit-text h3 {
+    color: #1a1a1a;
+    font-size: 1.3rem;
+    margin: 0 0 10px 0;
+    font-weight: 700;
+}
+
+.benefit-text p {
+    color: #444444;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+/* Stopka karty z linkiem do kontaktu */
+.benefits-footer {
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.benefits-footer p {
+    color: #666666;
+    font-size: 1rem;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Styl bazowy dla linku kontaktowego */
+.benefit-link {
+    color: var(--canva-blue);
+    text-decoration: none;
+    font-weight: 700;
+    margin-left: 5px;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.3s ease;
+    position: relative;
+    padding-bottom: 0px;
+}
+
+/* Animacja podkreślenia (elegancka linia) */
+.benefit-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--canva-blue-hover);
+    transition: width 0.3s ease;
+}
+
+/* Animacja strzałki bazowa */
+.benefit-link .arrow {
+    margin-left: 5px;
+    transition: transform 0.3s ease;
+}
+
+/* --- EFEKTY HOVER DLA LINKU --- */
+
+.benefit-link:hover {
+    color: var(--canva-blue-hover) !important;
+}
+
+/* Podkreślenie się wysuwa */
+.benefit-link:hover::after {
+    width: 100%;
+}
+
+/* Strzałka ucieka o 5px w prawo */
+.benefit-link:hover .arrow {
+    transform: translateX(5px);
+}
+
+
+.full-partners-section {
+    padding-top: 80px;    /* zostawiamy spory odstęp u góry */
+    padding-bottom: 20px;
+    background-color: #ffffff;
+    width: 100%;
+}
+
+.full-partners-section .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Nagłówek sekcji */
+.partners-header-wrapper {
+    max-width: 700px;
+    margin-bottom: 40px;
+}
+
+.section-eyebrow {
+    display: block;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    color: var(--canva-blue);
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.section-title {
+    font-size: 2.8rem;
+    color: #1a1a1a;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+/* Grid logotypów - Centrowanie */
+.partners-static-grid {
+    display: grid;
+    /* Używamy auto-fill dla lepszej elastyczności */
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
+    gap: 40px;
+    align-items: center;
+    justify-items: center; /* Kluczowe: centruje komórki w poziomie */
+}
+
+.static-partner-item {
+    display: flex;
+    justify-content: center; /* Centruje zawartość linku */
+    align-items: center;
+    width: 100%;
+    
+}
+
+.static-partner-item img {
+    max-width: 150px;
+    height: auto;
+    max-height: 55px; /* Zapobiega zbyt dużym pionowym logotypom */
+    filter: grayscale(100%);
+    opacity: 0.6;
+    transition: all 0.3s ease;
+    
+}
+
+/* Efekt po najechaniu */
+.static-partner-item:hover img {
+    filter: grayscale(0%);
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 2.2rem;
+    }
+    .partners-static-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 30px;
+    }
+}
+/* ==========================================================================
+   SEKCJA ZESPOŁU (WHO WE ARE)
+   ========================================================================== */
+
+.team-section {
+    position: relative;
+    padding: 100px 0 120px 0; /* Połączony padding: góra 100px, dół zwiększony do 120px */
+    background-color:#ffffff; /* Zaktualizowany, delikatnie szary kolor */
+    background-image: url('pattern-bottom.svg');
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: contain; 
+}
+
+.team-section .container {
+    position: relative;
+    z-index: 1;
+}
+
+.team-header {
+    margin-bottom: 60px;
+    text-align: left;
+    max-width: 800px;
+}
+
+.team-header h2 {
+    font-size: 2.8rem;
+    color: #1a1a1a;
+    margin: 0 0 15px 0;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.team-header p {
+    font-size: 1.1rem;
+    color: #555555;
+    line-height: 1.6;
+    max-width: 650px;
+    margin: 0;
+}
+
+/* Układ siatki kart */
+.team-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: stretch;
+}
+
+/* Karta pracownika */
+.team-card {
+    background: #f8f9fa;
+    border-radius: 25px;
+    padding: 40px;
+    border: 1px solid #eeeeee;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* Profil (Zdjęcie + Tytuł) */
+.team-member-profile {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 18px;
+}
+
+.team-member-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #eeeeee; /* Tło na wypadek przezroczystych zdjęć */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.team-member-info h3 {
+    font-size: 1.6rem;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.team-member-title {
+    color: var(--canva-blue);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.8rem;
+    display: block;
+    margin-top: 3px;
+}
+
+/* Opis biograficzny */
+.team-member-bio {
+    color: #444444;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    margin: 0 0 25px 0;
+}
+
+/* Linki wewnątrz tekstu biogramu */
+.bio-link {
+    color: #444444;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(33, 150, 243, 0.4);
+    transition: all 0.3s ease;
+}
+
+.bio-link:hover {
+    color: var(--canva-blue);
+    text-decoration-color: var(--canva-blue);
+}
+
+/* Akcje (Ikony pod spodem) */
+.team-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.team-action-link {
+    color: var(--canva-blue, var(--canva-blue));
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.team-action-link svg {
+    width: 26px; /* Zunifikowany rozmiar ikon */
+    height: 26px;
+    fill: currentColor;
+}
+
+.team-action-link:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+
+/* Dolny baner podsumowujący */
+.team-summary-banner {
+    margin-top: 50px;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 15px;
+    border: 1px solid #eeeeee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+.team-summary-banner p {
+    color: #666666;
+    font-size: 0.95rem;
+    margin: 0;
+    line-height: 1.6;
+    max-width: 650px;
+    text-align: left;
+}
+
+.team-summary-highlight {
+    color: var(--canva-blue);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    flex-shrink: 0;
+}
+/* ==========================================================================
+   FOOTER PODSTRON (Wersja Skromniejsza)
+   ========================================================================== */
+
+/* Nadpisanie marginesów ze strony głównej oraz dodanie delikatnej górnej krawędzi */
+#contact-footer.subpage-footer {
+    padding: 30px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.subpage-footer .footer-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+/* --- LEWA STRONA: Dane kontaktowe --- */
+.subpage-footer .footer-contact {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.subpage-footer .footer-email a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.subpage-footer .footer-email a:hover {
+    opacity: 0.7;
+}
+
+.subpage-footer .footer-address {
+    margin: 5px 0 0;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+/* --- PRAWA STRONA: Nawigacja i Legal --- */
+.subpage-footer .footer-nav-legal {
+    text-align: right;
+}
+
+.subpage-footer .footer-bottom-nav {
+    margin-bottom: 30px;
+}
+
+.subpage-footer .footer-bottom-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 25px;
+    justify-content: flex-end;
+}
+
+.subpage-footer .footer-bottom-nav a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+/* Zmiana na biały dla aktywnej zakładki lub po najechaniu myszką */
+.subpage-footer .footer-bottom-nav a:hover,
+.subpage-footer .footer-bottom-nav a.active {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.subpage-footer .footer-legal-text {
+    opacity: 0.3;
+    font-size: 0.8rem;
+    line-height: 1.6;
+}
+
+.subpage-footer .footer-legal-text p {
+    margin: 0;
+}
+
+.subpage-footer .footer-legal-text a {
+    color: inherit;
+    text-decoration: underline;
+    transition: opacity 0.3s ease;
+}
+
+.subpage-footer .footer-legal-text a:hover {
+    opacity: 0.7;
+}
+
+.subpage-footer .legal-separator {
+    margin: 0 5px;
+}
+
+/* ==========================================================================
+   PRE-FOOTER CTA (na podstronie About)
+   ========================================================================== */
+
+.pre-footer-cta {
+    background-color: #0b1116;
+    padding: 80px 0 40px 0;
+    text-align: center;
+}
+
+.pre-footer-cta .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.pre-footer-cta h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.pre-footer-cta .cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Wymuszenie wielkości przycisków na tej konkretnej podstronie */
+.pre-footer-cta .cta-btn {
+    padding: 15px 40px;
+    font-size: 1.1rem;
+}
+
+.pre-footer-cta .outline-blue {
+    border: 2px solid #ffffff;
+    color: var(--canva-blue);
+}
+
+.pre-footer-cta .outline-blue:hover {
+    background-color: #ffffff;
+    color: #ffffff;
+}
+
+/* --- MODYFIKATOR DLA FOOTERA --- */
+/* Usuwa górną linię i zmniejsza padding, gdy footer łączy się z ciemnym CTA */
+.subpage-footer.no-top-border {
+    border-top: none !important;
+    padding-top: 10px !important;
+}
+
+/* Styl domyślny dla hamburgera (ukryty na desktopie) */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    background: none;
+    border: none;
+    gap: 5px;
+}
+
+.hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #333; /* Zmień kolor na pasujący do Twojej strony */
+}
+
+/*====================== STYLE DLA MOBILE ====================*/
+
+/* 1. Ukrywamy przycisk hamburgera na dużych ekranach */
+.mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    position: relative; /* wymagane, aby z-index działał */
+    z-index: 1002; /* powyżej header (1000) i nav (1000) */
+}
+
+.mobile-menu-btn span {
+    width: 100%;
+    height: 3px;
+    background-color: #e9e9e9; /* Tutaj możesz zmienić kolor kresek */
+    transition: all 0.3s ease;
+}
+
+/* 2. Style tylko dla urządzeń mobilnych (poniżej 768px) */
+@media (max-width: 768px) {
+    
+    
+    
+    /* Pokazujemy przycisk hamburgera */
+    .mobile-menu-btn {
+        display: flex;
+        pointer-events: auto !important;
+    }
+
+    /* Ukrywamy standardową listę menu i ustawiamy ją jako pełnoekranowy panel */
+    header nav {
+        position: fixed;
+        top: 0;
+        right: -85%; /* Menu jest schowane za prawą krawędzią */
+        width: 80%;
+        height: 100vh;
+        background-color: #0b1116; /* Kolor tła menu po rozwinięciu */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: right 0.4s ease-in-out;
+        z-index: 1000;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.1); /* Cień, który oddziela menu od reszty strony */
+    }
+
+    /* Gdy menu ma klasę .active (nadawaną przez Twój skrypt JS) */
+    header nav.active {
+        right: 0; /* Menu wjeżdża na ekran */
+    }
+
+    header nav ul {
+        flex-direction: column;
+        gap: 25px; /* Odstępy między linkami */
+        list-style: none;
+        padding: 0;
+    }
+
+    header nav ul li a {
+        font-size: 1.5rem;
+        text-decoration: none;
+        color: #e9e9e9;
+        font-weight: bold;
+    }
+
+    /* Animacja hamburgera w znak X po otwarciu */
+    .mobile-menu-btn.active span:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+    }
+
+    .mobile-menu-btn.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .mobile-menu-btn.active span:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+    }
+    
+    /* Poprawka kontenera nagłówka, aby logo i hamburger były po bokach */
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+    }
+    /* Pokazujemy dodatkowe linki w menu hamburgerowym */
+    .footer-only-link {
+        display: block; 
+    }
+
+
+.hero {
+    
+    background-image: linear-gradient(
+        rgba(0, 0, 0, 0.5), 
+        rgba(0, 0, 0, 0)),
+    url('background.jpg'); /* Upewnij się, że ścieżka jest taka sama jak w Twoim głównym kodzie */
+    background-size: cover;
+    background-position: center;
+    display: flex;        /* DODANO: aby zadziałało centrowanie dzieci */
+    flex-direction: column;
+    padding: 40px 20px; /* Mniejszy padding góra/dół */
+    align-items: center;
+    text-align: left;
+}
+
+.hero h1 {
+    font-size: 50px; /* Zmniejszamy ogromny napis */
+    line-height: 1.2;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.hero p {
+    margin-bottom: 30px;
+    max-width: 100%;
+    padding-right: 10px
+}
+
+.cta-group {
+    display: flex;
+    flex-direction: column; /* Przyciski jeden pod drugim */
+    gap: 15px;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.btn {
+    width: auto;
+    min-width: 300px;
+    max-width: 400px; */
+    padding: 12px 25px;
+}
+
+.services {
+    padding: 60px 20px; /* Dodajemy trochę oddechu po bokach */
+}
+
+
+.services-grid {
+    display: flex;
+    flex-direction: column; /* Ustawia kafelki w pionie */
+    gap: 20px;              /* Odstęp między kafelkami */
+    width: 100%;
+}
+
+.service-card {
+    width: 100%;            /* Każdy kafelek zajmuje pełną szerokość */
+    box-sizing: border-box; /* Zabezpieczenie przed rozpychaniem przez padding */
+}
+
+.services h2 {
+    font-size: 38px !important;
+    line-height: 1;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;        /* Pozwala tagom zawijać się do nowej linii, jeśli są za długie */
+    gap: 8px;
+    justify-content: flex-start; /* Trzymamy się wyrównania do lewej, skoro nagłówek tak ma */
+}
+
+/* --- REGULATED MARKETS (MOBILE ONLY) --- */
+
+.regulated-markets {
+    display: block !important; /* Reset z flex (align-items: center) z desktopa */
+    padding: 60px 0 !important;
+}
+
+.regulated-markets .container {
+    width: 100% !important;
+    max-width: 100vw !important;
+    padding: 0 !important;
+    overflow: visible !important;
+}
+
+.regulated-markets h2 {
+    /* Ustawiamy margines identyczny jak padding w sekcji wyżej (standardowo 20px) */
+    margin-left: 40px !important; 
+    margin-right: 40px !important;
+    padding-left: 0 !important; 
+    text-align: left !important;
+    font-size: 38px !important;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.numbered-grid {
+    display: flex !important;
+    flex-direction: column !important; /* Kafelki jeden pod drugim */
+    gap: 20px !important;            /* Odstęp pionowy między kafelkami */
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 20px !important; 
+    padding-right: 20px !important; 
+    padding-bottom: 30px !important;
+    overflow: visible !important;    /* Wyłączamy przewijanie poziome */
+    scroll-snap-type: none !important;
+}
+
+.numbered-grid::-webkit-scrollbar {
+    display: none;
+}
+
+.numbered-block {
+    /* Kafelek zajmuje teraz całą dostępną szerokość kontenera */
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    margin-right: 0 !important;      /* Usuwamy margines boczny */
+    
+    /* Układ wewnątrz kafelka: numer nad tekstem */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 30px !important;
+    box-sizing: border-box !important;
+    
+    /* Resetujemy ewentualne snapowanie i transformacje */
+    scroll-snap-align: none !important;
+    transform: none !important;
+}
+
+.numbered-block .number {
+    font-size: 4rem !important;      /* Nieco mniejszy niż na desktopie */
+    min-width: auto !important;
+    margin-bottom: 10px !important;
+    margin-right: 0 !important;
+    line-height: 1;
+}
+
+/* --- ENGAGEMENT MODELS (MOBILE ONLY) --- */
+
+.engagement-models {
+    padding: 60px 0 !important; /* Mniejszy padding na mobile */
+}
+
+.engagement-models .container {
+    padding: 0 40px !important; /* Twoje spójne 40px marginesu */
+}
+
+.engagement-models h2 {
+    font-size: 38px !important; /* Skalowanie dużego tytułu */
+    margin-bottom: 20px !important;
+}
+
+.engagement-models .section-subtitle {
+    font-size: 1.1rem !important;
+    margin-bottom: 30px !important;
+}
+
+.engagement-grid {
+    display: flex !important;
+    flex-direction: column !important; /* Menu nad treścią */
+    width: 100% !important;
+    gap: 20px !important;
+    margin-top: 10px !important;
+}
+
+/* LEWE MENU -> POZIOME ZAKŁADKI */
+.engagement-grid {
+    display: flex !important;
+    flex-direction: column !important; /* Wszystko w jednej kolumnie */
+    align-items: stretch !important;
+    width: 100% !important;
+    gap: 15px !important; /* Odstęp między menu a treścią */
+}
+
+.engagement-menu {
+    display: flex !important;
+    flex-direction: column !important; /* Przyciski jeden pod drugim */
+    width: 100% !important;
+    overflow: visible !important; /* Wyłączamy przewijanie boczne */
+    gap: 10px !important; /* Odstęp między przyciskami */
+    padding-bottom: 0 !important;
+}
+
+.menu-item {
+    width: 100% !important; /* Każdy przycisk na całą szerokość */
+    flex: none !important;
+    text-align: left !important; /* Tekst do lewej, żeby był czytelniejszy */
+    padding: 18px 20px !important;
+    font-size: 0.9rem !important;
+    white-space: normal !important; /* Pozwalamy tekstowi zawijać się, jeśli jest długi */
+    display: block !important;
+}
+
+.menu-item.active {
+    /* Przywracamy niebieski pasek z lewej strony (jak na desktopie) */
+    padding-left: 25px !important; 
+}
+
+.menu-item.active::before {
+    left: 0 !important;
+    top: 20% !important;
+    height: 60% !important;
+    width: 4px !important;
+    bottom: auto !important;
+    border-radius: 0 4px 4px 0 !important;
+}
+
+.model-content {
+    width: 100% !important;
+    margin-top: 5px !important; /* Delikatny odstęp od menu */
+    padding: 25px !important;
+}
+
+/* --- PARTNERS CAROUSEL MOBILE --- */
+
+.partners-carousel {
+    padding: 60px 0 !important; /* Mniejszy padding góra/dół */
+}
+
+.partners-title {
+    font-size: 28px !important; /* Mniejszy, czytelny nagłówek */
+    margin-bottom: 40px !important;
+    padding: 0 20px;
+    line-height: 1.2 !important;
+}
+
+.logo-viewport {
+    height: 80px !important; /* Nieco niższy kontener na loga */
+    max-width: 100% !important;
+    /* margin-bottom: 0 !important; */
+}
+
+.logo-group {
+    display: flex !important;
+    justify-content: center !important; /* Środkuje loga na ekranie */
+    gap: 20px !important; /* Odstęp między dwoma logami */
+    padding: 0 40px !important; /* Marginesy boczne zgodne z resztą strony */
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.partner-link {
+    /* Obliczamy szerokość: (100% - odstęp) / 2 */
+    flex: 0 0 calc((100% - 20px) / 2) !important; 
+    max-width: calc((100% - 20px) / 2) !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.partner-logo {
+    width: 100% !important; /* Logo zajmuje dostępną szerokość linku */
+    height: auto !important; /* Zachowuje proporcje */
+    max-height: 60px !important; /* Blokuje zbyt wysokie loga */
+    object-fit: contain !important; /* Gwarantuje, że logo nie zostanie zniekształcone */
+    filter: grayscale(100%) !important; /* Spójność wizualna */
+    opacity: 0.7 !important;
+}
+
+/* Opcjonalnie: Ukrywamy trzecie logo w grupie, jeśli HTML ma ich 3 */
+.logo-group .partner-link:nth-child(n+3) {
+    display: none !important;
+}
+.partners-footer {
+    margin-top: 30px !important; /* Zmniejszono z 80px na 30px */
+}
+
+/* --- FINAL CTA SECTION MOBILE --- */
+
+.final-cta-section {
+    /* Wypełnienie całego ekranu */
+    min-height: 100vh !important; 
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important; /* Środkowanie w pionie */
+    align-items: center !important;    /* Środkowanie w poziomie */
+    line-height: 1.2 !important;
+    padding: 40px 20px !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+}
+
+.final-cta-section .container {
+    width: 100% !important;
+}
+
+
+.final-cta-section h2 {
+    font-size: clamp(45px, 8vw, 36px) !important;
+    line-height: 1 !important;
+    margin-bottom: 20px !important;
+}
+
+.final-cta-section p {
+    font-size: 1.15rem !important;
+    max-width: 90% !important;
+    margin: 0 auto !important;
+}
+
+/* Naprawa kontenera z linkiem (ten z inline style margin-top: 40px) */
+.final-cta-section div[style*="margin-top"] {
+    margin-top: 50px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important; /* To wyśrodkuje link względem tekstu */
+    width: 100% !important;
+}
+
+.cta-roadmap-hint {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important; /* Klucz do wyśrodkowania linku */
+    gap: 12px !important;
+}
+
+.roadmap-subtle-link {
+    display: inline !important; /* Kluczowa zmiana z inline-block na inline */
+    text-align: center !important;
+    font-weight: 700 !important;
+    font-size: 1.1rem !important;
+    color: #ffffff !important; 
+    text-decoration: none !important;
+    border-bottom: 2px solid var(--canva-blue, var(--canva-blue)); 
+    padding-bottom: 2px !important;
+    line-height: 1.5 !important; /* Daje oddech, jeśli tekst się złamie */
+}
+
+/* Wymuszamy, by ostatnie słowo "Models" i strzałka nie rozdzielały się */
+.roadmap-subtle-link .cta-arrow {
+    white-space: nowrap !important; 
+}
+
+/* --- FOOTER MOBILE --- */
+    .footer-bar {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .footer-col-brand {
+        align-items: center;
+        text-align: center;
+    }
+
+    .footer-contact-details {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .footer-contact-col {
+        align-items: center;
+    }
+
+    .footer-contact-details a {
+        display: inline;
+    }
+
+    .footer-address {
+        text-align: center;
+    }
+
+    .footer-col-right {
+        align-items: center;
+        text-align: center;
+    }
+
+    .footer-nav {
+        justify-content: center;
+        gap: 0.5rem 1rem;
+    }
+
+    .footer-legal {
+        text-align: center;
+    }
+
+    /* --- SUBPAGE FOOTER (minimal) MOBILE --- */
+    .subpage-footer .footer-layout {
+        flex-direction: column;
+        gap: 1.75rem;
+    }
+
+    .subpage-footer .footer-nav-legal {
+        text-align: left;
+    }
+
+    .subpage-footer .footer-bottom-nav ul {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 1rem 1.25rem;
+    }
+
+    /* ====================== CASE STUDIES MOBILE ====================== */
+    .page-hero .container {
+    padding-left: 40px !important;  /* Zwiększamy odstęp od lewej krawędzi */
+    padding-right: 40px !important; /* Zwiększamy odstęp od prawej krawędzi */
+    display: block !important;      /* Resetujemy flexa dla kontenera */
+}
+
+/* Poprawka dla nagłówka h1 */
+.page-hero h1 {
+    font-size: 38px !important;    /* Spójny rozmiar z Home */
+    line-height: 1.1 !important;
+    margin-bottom: 20px !important;
+    text-align: left !important;
+}
+
+/* Poprawka dla opisu p */
+.page-hero p {
+    font-size: 1.1rem !important;
+    max-width: 100% !important;     /* Na mobile pozwalamy tekstowi zająć całą szerokość kontenera */
+    text-align: left !important;
+}
+
+/* Przyciski - ustawiamy jeden pod drugim, jak na Home */
+.page-hero .cta-group {
+    flex-direction: column !important; /* Układ pionowy */
+    gap: 15px !important;
+    margin-top: 30px !important;
+    align-items: center !important;    /* Środkujemy same przyciski na ekranie */
+}
+
+.page-hero .btn {
+    width: 100% !important;           /* Przyciski na całą szerokość (lepiej się klika kciukiem) */
+    max-width: 320px !important;      /* Ale nie szersze niż 320px */
+    text-align: center !important;
+    justify-content: center !important;
+}
+
+.detailed-cases {
+    padding: 40px 0 !important;
+}
+
+.case-detail-block {
+    padding: 50px 0 !important; /* Separacja między kolejnymi artykułami */
+}
+
+.case-detail-block .container {
+    padding: 0 40px !important; /* Twoje spójne 40px marginesu bocznego */
+}
+
+/* 1. Ukrywamy zdjęcie przy tytule na mobile */
+.detail-img-wrapper {
+    display: none !important;
+}
+
+/* 2. Zmniejszamy logo klienta */
+.client-logo {
+    height: 40px !important; /* Znacznie mniejsze logo dla oszczędności miejsca */
+    margin-bottom: 5px !important;
+}
+
+/* 3. Optymalizacja nagłówka h2 */
+.case-detail-header h2 {
+    font-size: 26px !important; /* Skalujemy duży tytuł */
+    line-height: 1.2 !important;
+    font-weight: 700 !important;
+    margin-top: 10px !important;
+}
+
+/* 4. Rozbijamy grid na jedną kolumnę */
+.case-detail-header, 
+.case-detail-body {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 30px !important;
+}
+
+/* 5. Poprawa czytelności tekstów */
+.case-detail-body h3 {
+    font-size: 1.1rem !important;
+    margin-bottom: 15px !important;
+}
+
+.case-story-col em {
+    font-size: 1.05rem !important;
+    padding-left: 12px !important;
+    margin: 20px 0 !important;
+}
+
+.case-expertise-col li {
+    font-size: 0.95rem !important;
+    margin-bottom: 12px !important;
+    padding-left: 25px !important;
+}
+
+/* 6. Nawigacja pod artykułem (Back to list / Let's discuss) */
+.case-detail-navigation {
+    flex-direction: column !important; /* Układ pionowy */
+    align-items: flex-start !important;
+    gap: 20px !important;
+    margin-top: 40px !important;
+    padding-top: 25px !important;
+}
+
+.case-detail-navigation div {
+    text-align: left !important; /* Przycisk kontaktu do lewej */
+}
+
+.contact-link {
+    font-size: 1rem !important;
+}
+
+#contact-footer {
+    padding: 40px 0 !important;
+    text-align: center !important; /* Środkujemy tekst bazowy */
+}
+
+/* 1. Kontener flex - zmieniamy na pionowy i środkujemy */
+#contact-footer .container > div {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 30px !important;
+}
+
+/* 2. Dane kontaktowe - resetujemy wyrównanie */
+.footer-contact {
+    text-align: center !important;
+    width: 100% !important;
+}
+
+/* 3. Nawigacja i Legal - resetujemy wyrównanie do prawej */
+.footer-nav-legal {
+    text-align: center !important;
+    width: 100% !important;
+}
+
+/* 4. Lista menu - układamy w poziomie na środku lub pionowo */
+.footer-nav-legal nav ul {
+    justify-content: center !important; /* Środkujemy linki Home, Case Studies, About */
+    gap: 20px !important;
+}
+
+/* 5. Copyright i Privacy Policy */
+.footer-nav-legal div {
+    margin-top: 20px !important;
+    opacity: 0.5 !important; /* Odrobinę zwiększamy widoczność względem 0.3 */
+}
+
+/* 6. Usunięcie zbędnych marginesów wewnątrz */
+.footer-nav-legal nav {
+    margin-bottom: 20px !important;
+}
+
+/* --- R&D ROADMAP MOBILE FIX --- */
+
+/* 1. Zmieniamy układ z poziomego na pionowy */
+#engineering-journey .container {
+    padding-left: 40px !important;  /* Taki sam margines jak w Hero i Case Studies */
+    padding-right: 40px !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+}
+
+#engineering-journey h2 {
+    font-size: 32px !important;    /* Identycznie jak w Benefits i Partners */
+    line-height: 1.1 !important;
+    margin-bottom: 15px !important;
+    font-weight: 800 !important;
+    text-align: left !important;
+}
+
+#engineering-journey p {
+    font-size: 1.05rem !important; /* Spójna wielkość z opisem w Benefits */
+    line-height: 1.4 !important;
+    color: #666 !important;
+    margin-bottom: 0 !important;
+    text-align: left !important;
+}
+
+/* Redukcja paddingu całej sekcji, żeby "podciągnąć" treść wyżej */
+#engineering-journey {
+    padding: 60px 0 !important;
+}
+
+
+.roadmap-wrapper {
+    flex-direction: column !important;
+    gap: 30px !important; /* Większy odstęp między krokami */
+}
+
+/* 2. Resetujemy szerokość kart */
+.step-card {
+    flex: none !important;
+    width: 100% !important;
+    padding: 25px !important;
+    box-sizing: border-box !important;
+}
+
+/* 3. Ukrywamy przerywaną linię łączącą (jest pozioma, więc na liście nie ma sensu) */
+.roadmap-connect-line {
+    display: none !important;
+}
+
+/* 4. Opcjonalnie: Dodajemy pionową linię z boku (wizualne połączenie kroków) */
+.roadmap-wrapper-context {
+    position: relative;
+}
+
+
+/* 5. Poprawki tekstowe dla czytelności na małym ekranie */
+.step-card h3 {
+    font-size: 1.25rem !important;
+    margin-bottom: 10px !important;
+}
+
+.step-card p {
+    font-size: 0.9rem !important;
+    line-height: 1.5 !important;
+}
+
+/* Tagi technologiczne - niech się ładnie zawijają */
+.tech-tags-container {
+    margin-top: 15px !important;
+    justify-content: flex-start !important;
+}
+
+.benefits-breakout-section {
+    padding: 60px 0 !important; /* Mniejszy padding góra/dół sekcji */
+}
+
+/* 1. Dopasowanie głównego kontenera do szerokości Hero/Roadmap */
+.benefits-breakout-section .container {
+    padding-left: 40px !important; 
+    padding-right: 40px !important;
+}
+
+/* 2. Nagłówek sekcji */
+.benefits-breakout-section h2 {
+    font-size: 32px !important; /* Spójny rozmiar */
+    line-height: 1.1 !important;
+    margin-bottom: 30px !important;
+    text-align: left !important;
+}
+
+/* 3. Naprawa "szklanej karty" */
+.benefits-glass-card {
+    padding: 30px 20px !important; /* Redukujemy ogromny padding 60px */
+    border-radius: 20px !important; /* Nieco mniejszy promień dla mniejszych ekranów */
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+/* 4. Zamiana grida 2-kolumnowego na 1 kolumnę */
+.benefits-glass-card > div:first-child {
+    grid-template-columns: 1fr !important; /* Wszystkie benefity jeden pod drugim */
+    gap: 30px !important; /* Odstęp między benefitami */
+}
+
+/* 5. Stylowanie poszczególnych benefitów */
+.benefits-glass-card h3 {
+    font-size: 1.2rem !important;
+    margin-bottom: 8px !important;
+}
+
+.benefits-glass-card p {
+    font-size: 0.9rem !important;
+    line-height: 1.5 !important;
+}
+
+/* 6. Dolny pasek w karcie (Let's talk strategy) */
+.benefits-glass-card div[style*="margin-top: 50px"] {
+    margin-top: 30px !important;
+    padding-top: 20px !important;
+    flex-direction: column !important; /* Link pod tekstem */
+    align-items: flex-start !important;
+    gap: 10px !important;
+}
+
+.benefit-link {
+    margin-left: 0 !important; /* Reset margin-left: 5px z inline style */
+}
+
+.full-partners-section {
+    padding-top: 40px !important; /* Zmniejszamy górny padding */
+    padding-bottom: 40px !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* 1. Dopasowanie kontenera do standardu 40px */
+.full-partners-section .container {
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+}
+
+/* 2. Wyrównanie nagłówka */
+.partners-header-wrapper {
+    margin-bottom: 30px !important;
+    text-align: left !important;
+}
+
+.section-eyebrow {
+    font-size: 0.75rem !important; /* Odrobinę mniejszy na mobile */
+    margin-bottom: 10px !important;
+}
+
+.section-title {
+    font-size: 32px !important; /* Spójny rozmiar z Roadmap/Benefits */
+    line-height: 1.1 !important;
+    margin-bottom: 15px !important;
+}
+
+/* 3. Optymalizacja grida logotypów */
+.partners-static-grid {
+    /* Zmieniamy minmax na mniejszy, aby zmieścić 2 loga w rzędzie na małych ekranach */
+    grid-template-columns: repeat(2, 1fr) !important; 
+    gap: 30px 20px !important; /* Większy odstęp pionowy, mniejszy poziomy */
+    justify-items: start !important; /* Wyrównujemy loga do lewej, by pasowały do nagłówka */
+}
+
+.static-partner-item {
+    justify-content: center !important; /* Logo do lewej wewnątrz swojej komórki */
+}
+
+.static-partner-item img {
+    max-width: 120px !important; /* Skalujemy loga, by nie były zbyt dominantne */
+    max-height: 45px !important;
+    opacity: 0.8 !important; /* Na mobile lepiej dać nieco większą widoczność niż 0.6 */
+}
+.team-section {
+        padding: 60px 0; 
+       background-color: #ffffff !important;
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-position: center;
+    border-top: none !important;
+    
+    }
+
+    .team-section .container {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    /* 2. Nagłówek sekcji */
+    .team-header h2 {
+        font-size: 32px; 
+        line-height: 1.1;
+        margin-bottom: 15px;
+        text-align: left;
+    }
+
+    .team-header p,
+    .team-member-bio {
+        font-size: 1.05rem;
+        line-height: 1.4;
+        margin-bottom: 10px;
+    }
+
+    /* 3. Przejście z 2 kolumn na 1 (Karty bio jedna pod drugą) */
+    .team-grid {
+        grid-template-columns: 1fr; 
+        gap: 20px;
+    }
+
+    /* 4. Optymalizacja kart zespołu */
+    .team-card {
+        padding: 30px; 
+        border-radius: 20px;
+    }
+
+    .team-member-info h3 {
+        font-size: 1.4rem;
+    }
+
+    /* 5. Naprawa dolnego paska z liczbą inżynierów (układ pionowy) */
+    .team-summary-banner {
+        flex-direction: column; 
+        align-items: flex-start;
+        gap: 15px;
+        padding: 25px;
+        margin-top: 20px;
+    }
+
+    .team-summary-banner p {
+        margin-bottom: 0; /* Usuwamy margines na dole, żeby tekst nie odpychał liczby inżynierów */
+    }
+}
+
+#footer {
+    padding: 60px 0 40px 0 !important;
+}
+
+#footer h2 {
+    font-size: 2.1rem !important; /* Spójne z Case Studies */
+    line-height: 1.1 !important;  /* Zmniejszony odstęp między linijkami */
+    margin-bottom: 30px !important;
+    padding: 0 20px !important;
+}
+
+/* Naprawa kontenera przycisków */
+#footer div[style*="display: flex"] {
+    flex-direction: column !important; /* Jeden pod drugim */
+    align-items: center !important;
+    gap: 15px !important;
+    width: 100% !important;
+}
+
+/* Naprawa samych przycisków */
+#footer .btn-primary-blue, 
+#footer .btn-outline {
+    width: 100% !important;
+    max-width: 320px !important; /* Blokujemy nadmierne rozciąganie */
+    padding: 15px 20px !important; /* Mniejszy padding poziomy, żeby tekst się nie gniótł */
+    font-size: 1rem !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    height: auto !important;
+    box-sizing: border-box !important;
+}
+
+/* Reset marginesów bocznych kontenera, by przyciski miały miejsce */
+#footer .container {
+    padding: 0 40px !important; /* Twoje standardowe 40px */
+}
+
+/* ==========================================================================
+   IN SECURITY — placeholder treściowy (front-page.php)
+   Skopiowane i przemianowane z bloku "IN MONITORING" (in-monitoring/style.css);
+   sekcja EU funding celowo pominięta — nie wiadomo, czy dofinansowanie POIR
+   dotyczy też in-security, do ew. dodania później, patrz in-monitoring.
+   ========================================================================== */
+
+.security-hero {
+    text-align: center;
+    padding-top: 160px;
+    padding-bottom: 100px;
+    background: linear-gradient(180deg, rgba(11, 17, 22, 0.55) 0%, rgba(17, 29, 41, 0.75) 100%), url('assets/images/hero-in-security.jpg') no-repeat center center / cover;
+}
+
+.security-hero-icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 24px;
+}
+
+.security-hero h1 {
+    font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+    font-weight: 900;
+    line-height: 1.15;
+    max-width: 900px;
+    margin: 0 auto 24px;
+}
+
+.security-hero p {
+    font-size: 1.15rem;
+    max-width: 700px;
+    margin: 0 auto 40px;
+    opacity: 0.85;
+}
+
+.security-hero .cta-group {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.security-how {
+    background: var(--section-light);
+    color: var(--primary-bg);
+    text-align: center;
+    padding-bottom: 40px;
+}
+
+.security-how h2 {
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 12px;
+}
+
+.security-how-intro {
+    font-weight: 700;
+    margin-bottom: 32px;
+}
+
+.security-how-list {
+    list-style: none;
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.security-how-list li {
+    padding-left: 30px;
+    position: relative;
+    line-height: 1.6;
+}
+
+.security-how-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 1px;
+    width: 18px;
+    height: 18px;
+    background-color: var(--canva-blue);
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3C/svg%3E");
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+}
+
+.security-tile-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+}
+
+.security-tiles {
+    background: var(--section-light);
+    color: var(--primary-bg);
+    padding-top: 40px;
+}
+
+.security-tile {
+    background: #ffffff;
+    border: 1px solid rgba(11, 17, 22, 0.08);
+    border-radius: 16px;
+    padding: 32px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.security-tile:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(11, 17, 22, 0.1);
+    border-color: rgba(0, 112, 243, 0.25);
+}
+
+.security-tile-image {
+    display: block;
+    width: 100%;
+    max-height: 180px;
+    padding-top: 14px;
+    object-fit: contain;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background: var(--section-light);
+}
+
+.security-tile h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: var(--primary-bg);
+}
+
+.security-tile p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--primary-bg);
+    opacity: 0.75;
+}
+
+.security-cta {
+    background: var(--canva-blue);
+    color: #ffffff;
+    text-align: center;
+    padding: 4.5rem 0 4rem;
+}
+
+.security-cta h2 {
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0 0 0.75rem;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.28);
+}
+
+.security-cta p {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0 0 2rem;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.18);
+}
+
+.security-cta-btns {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Odwrócony przycisk — na niebieskim tle sekcji niebieski przycisk by zniknął. */
+.security-cta-btns .btn-primary-blue {
+    background: #ffffff;
+    color: var(--canva-blue);
+    border-color: #ffffff;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+}
+
+.security-cta-btns .btn-primary-blue:hover {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 768px) {
+    .security-cta {
+        padding: 3rem 0 2.5rem;
+    }
+
+    .security-hero {
+        padding-top: 120px;
+    }
+
+    .security-tile-grid {
+        grid-template-columns: 1fr;
+    }
+}

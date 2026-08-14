@@ -1,0 +1,132 @@
+/* ===== LEGAL PAGES (Privacy Policy / Cookie Policy) ===== */
+
+.legal-page {
+    background: #ffffff;
+}
+
+.legal-content {
+    padding-block: 3.5rem 5rem;
+}
+
+/* Self-contained container — legal pages don't load safety-page.css,
+   so .safety-container needs its own padding/centering here, not just an override. */
+.legal-page .safety-container,
+.legal-hero .safety-container {
+    width: 100%;
+    max-width: 860px;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+    box-sizing: border-box;
+}
+
+.legal-hero {
+    background-color: #0b1116;
+    padding: 140px 0 60px;
+}
+
+.legal-hero-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--canva-blue, #0070f3);
+    margin: 0 0 1rem;
+}
+
+.legal-hero h1 {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 900;
+    line-height: 1.15;
+    color: #ffffff;
+    margin: 0 0 0.75rem;
+}
+
+.legal-updated {
+    color: #9aa5b1;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.legal-body h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #0b1116;
+    margin: 2.5rem 0 1rem;
+}
+
+.legal-body h2:first-child {
+    margin-top: 0;
+}
+
+.legal-body h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #0b1116;
+    margin: 1.75rem 0 0.75rem;
+}
+
+.legal-body p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #333c46;
+    margin: 0 0 1rem;
+}
+
+.legal-body ul,
+.legal-body ol {
+    margin: 0 0 1.25rem;
+    padding-left: 1.35rem;
+}
+
+.legal-body li {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: #333c46;
+    margin-bottom: 0.5rem;
+}
+
+.legal-body a {
+    color: var(--canva-blue, #0070f3);
+    text-decoration: underline;
+}
+
+.legal-body strong {
+    color: #0b1116;
+}
+
+.legal-table-wrap,
+.legal-body .wp-block-table {
+    overflow-x: auto;
+    margin: 0 0 1.5rem;
+}
+
+.legal-table,
+.legal-body table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+}
+
+.legal-table th,
+.legal-table td,
+.legal-body table th,
+.legal-body table td {
+    text-align: left;
+    padding: 0.65rem 0.85rem;
+    border: 1px solid #e2e8f0;
+    vertical-align: top;
+    color: #333c46;
+}
+
+.legal-table th,
+.legal-body table th {
+    background: #f8f9fa;
+    font-weight: 700;
+    color: #0b1116;
+}
+
+@media (max-width: 640px) {
+    .legal-hero {
+        padding: 120px 0 48px;
+    }
+}
