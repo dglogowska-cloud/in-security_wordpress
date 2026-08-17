@@ -3121,12 +3121,14 @@ nav a:hover {
 }
 
 .security-how h2 {
-    font-size: 2rem;
+    font-size: 3rem;
     font-weight: 900;
+    letter-spacing: -1px;
     margin-bottom: 12px;
 }
 
 .security-how-intro {
+    font-size: 1.3rem;
     font-weight: 700;
     margin-bottom: 32px;
 }
@@ -3161,56 +3163,6 @@ nav a:hover {
     mask-repeat: no-repeat;
     -webkit-mask-size: contain;
     mask-size: contain;
-}
-
-.security-tile-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
-}
-
-.security-tiles {
-    background: var(--section-light);
-    color: var(--primary-bg);
-    padding-top: 40px;
-}
-
-.security-tile {
-    background: #ffffff;
-    border: 1px solid rgba(11, 17, 22, 0.08);
-    border-radius: 16px;
-    padding: 32px;
-    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-}
-
-.security-tile:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(11, 17, 22, 0.1);
-    border-color: rgba(0, 112, 243, 0.25);
-}
-
-.security-tile-image {
-    display: block;
-    width: 100%;
-    max-height: 180px;
-    padding-top: 14px;
-    object-fit: contain;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    background: var(--section-light);
-}
-
-.security-tile h3 {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-    color: var(--primary-bg);
-}
-
-.security-tile p {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: var(--primary-bg);
-    opacity: 0.75;
 }
 
 .security-cta {
@@ -3262,8 +3214,185 @@ nav a:hover {
     .security-hero {
         padding-top: 120px;
     }
+}
 
-    .security-tile-grid {
+/* "IN Security in a Guard's Pocket" — render po lewej, lista praktycznego użycia po
+   prawej. Dopóki render nie trafi do assets/images/garda1-render.png, pokazuje
+   się neutralny placeholder zamiast pustej kolumny. */
+.security-device-usage {
+    background: var(--section-light);
+    color: var(--primary-bg);
+    padding: 100px 0;
+}
+
+.device-usage-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.device-usage-media {
+    display: flex;
+    justify-content: center;
+}
+
+.device-usage-image {
+    max-width: 100%;
+    width: 420px;
+    display: block;
+    filter: drop-shadow(0 10px 14px rgba(11, 17, 22, 0.18)) drop-shadow(0 34px 55px rgba(11, 17, 22, 0.25));
+}
+
+.device-usage-placeholder {
+    width: 240px;
+    height: 240px;
+    border: 2px dashed rgba(11, 17, 22, 0.2);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: rgba(11, 17, 22, 0.4);
+    font-weight: 700;
+    text-align: center;
+}
+
+.device-usage-placeholder span {
+    font-weight: 400;
+    font-size: 0.85rem;
+    margin-top: 4px;
+}
+
+.device-usage-content h2 {
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+}
+
+.device-usage-content .security-how-intro {
+    text-align: left;
+}
+
+.device-usage-content .security-how-list {
+    margin: 0;
+    max-width: none;
+}
+
+@media (max-width: 900px) {
+    .device-usage-grid {
         grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .device-usage-media {
+        order: -1;
+    }
+}
+
+/* "Meet IN Security" — sekcja jasna (odwrócona z pierwotnej ciemnej wersji, żeby
+   nie przerywać jasnego rytmu strony), kafelki 2x2 w stylu zbliżonym do
+   .step-card/.service-card (biała karta, cień, obrys na hover). */
+.device-specs-section {
+    background-color: var(--section-light);
+    color: var(--primary-bg);
+    padding: 120px 0;
+}
+
+.device-specs-section .container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.device-specs-section h2 {
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    margin-bottom: 1rem;
+}
+
+.device-specs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    width: 100%;
+}
+
+.device-spec-card {
+    background: #ffffff;
+    border: 1px solid rgba(11, 17, 22, 0.08);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(11, 17, 22, 0.05);
+    transition: all 0.3s ease;
+}
+
+.device-spec-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(11, 17, 22, 0.1);
+    border-color: var(--canva-blue);
+}
+
+.device-spec-card .number {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--canva-blue);
+    opacity: 0.9;
+    line-height: 1;
+    margin-bottom: 12px;
+}
+
+.device-spec-card h3 {
+    margin-bottom: 10px;
+    font-size: 1.15rem;
+    color: var(--primary-bg);
+}
+
+.device-spec-card p {
+    color: #444444;
+    font-size: 0.98rem;
+    line-height: 1.55;
+}
+
+@media (max-width: 768px) {
+    .device-specs-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* "How It Works" jako sekwencja kroków (.step-card z roadmapy) — 5 kart
+   w jednym rzędzie (kurczą się równo, .roadmap-connect-line przechodzi
+   w przerwach między nimi, sugerując "ścieżkę" patrolu). Domyślny
+   left/right:80px linii był dostrojony pod inny (mniej liczny) układ kart,
+   tu rozciągamy ją na całą szerokość rzędu. */
+.how-it-works-steps {
+    margin-top: 20px;
+}
+
+.how-it-works-steps .step-card {
+    flex: 1 1 0;
+    min-width: 0;
+    text-align: left;
+}
+
+.how-it-works-steps .roadmap-connect-line {
+    left: 0;
+    right: 0;
+    border-top: 2px dashed rgba(0, 112, 243, 0.45) !important;
+}
+
+@media (max-width: 1023px) {
+    .how-it-works-steps .roadmap-wrapper {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .how-it-works-steps .step-card {
+        flex: 1 1 260px;
+        max-width: 320px;
     }
 }
