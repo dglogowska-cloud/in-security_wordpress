@@ -1,13 +1,15 @@
 <?php
 /*
  * Treść in-security — LoRa-based tracking do weryfikacji obchodów ochrony.
+ * "IN Security" to nazwa systemu/marki, "IN Guard 01" to nazwa konkretnego
+ * urządzenia (trackera) — rozróżniamy to konsekwentnie w treści poniżej.
  *
  * Trzy sekcje celowo pokazują trzy różne perspektywy, żeby się nie dublować —
  * żadna liczba/fakt techniczny nie powtarza się w więcej niż jednym miejscu:
  * "How It Works" (proces na poziomie ogólnym, bez twardych liczb) →
- * "IN Security in a Guard's Pocket" (historia dnia pracy strażnika, zero żargonu
+ * "IN Guard 01 in a Guard's Pocket" (historia dnia pracy strażnika, zero żargonu
  * technicznego; render urządzenia po lewej — wstaw jako
- * assets/images/garda1-render.png (przezroczyste tło), do tego czasu
+ * assets/images/in-guard-render.png (przezroczyste tło), do tego czasu
  * pokazuje się placeholder) →
  * "The Hardware" (jedyne miejsce z konkretnymi specyfikacjami: LoRaWAN/AES,
  * GNSS/15s/500 punktów, bateria/ładowanie, przycisk+upadek — nazwa sekcji
@@ -16,25 +18,23 @@
  *
  * Sekcja "Where IN Security Fits" reużywa klas .services/.tags odziedziczonych
  * z in-monitoring (tam nieużywane, tu dostały wreszcie zastosowanie) — nie
- * duplikujemy stylów. AI-generowane obrazki checkpoints-configuration.jpg /
- * patrol-verification.jpg / statistics.jpg zostały w assets/images/ na potrzeby
- * przyszłej sekcji z korzyściami (jeszcze nieumieszczonej na stronie).
+ * duplikujemy stylów.
  */
 get_header();
 
 $tiles_dir = get_template_directory_uri() . '/assets/images/';
 
 // Render ma przezroczyste tło, dlatego PNG (nie JPG, który by je zabił).
-$garda1_render_path = get_template_directory() . '/assets/images/garda1-render.png';
-$garda1_render_url  = $tiles_dir . 'garda1-render.png';
+$garda1_render_path = get_template_directory() . '/assets/images/in-guard-render.png';
+$garda1_render_url  = $tiles_dir . 'in-guard-render.png';
 
 // Fragmenty w <strong> renderują się pogrubione — lista jest wypisywana przez
 // wp_kses (nie esc_html), więc bezpiecznie przepuszcza tylko ten jeden tag.
 $device_usage_points = [
     '<strong>Start of shift:</strong> clip it on, press the power button, and start walking the route — that\'s the entire setup.',
-    '<strong>During the patrol:</strong> IN Security quietly tracks itself in the background, with nothing for the guard to check or log by hand.',
+    '<strong>During the patrol:</strong> IN Guard 01 quietly tracks itself in the background, with nothing for the guard to check or log by hand.',
     '<strong>If something feels wrong:</strong> one press of the button sends an immediate alarm to the control room — no radio, no phone call, no hesitation.',
-    '<strong>If a guard goes down:</strong> IN Security notices on its own and raises the alarm automatically, even if they can\'t reach the button.',
+    '<strong>If a guard goes down:</strong> IN Guard 01 notices on its own and raises the alarm automatically, even if they can\'t reach the button.',
     '<strong>End of shift:</strong> drop it in the charger, and it\'s ready to go for the next patrol.',
 ];
 
@@ -48,7 +48,7 @@ $how_it_works = [
     [
         'number'  => '02',
         'title'   => 'Track in Real Time',
-        'content' => 'As the guard walks the route, IN Security continuously records its exact position in the background.',
+        'content' => 'As the guard walks the route, IN Guard 01 continuously records its exact position in the background.',
         'icon'    => '<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/>',
     ],
     [
@@ -71,30 +71,11 @@ $how_it_works = [
     ],
 ];
 
-// Fragmenty w <strong> renderują się pogrubione — treść jest wypisywana przez
-// wp_kses (nie esc_html), więc bezpiecznie przepuszcza tylko ten jeden tag.
-$device_specs = [
-    [
-        'number'  => '01',
-        'title'   => 'Long-Range, Encrypted & Fully On-Premise',
-        'content' => 'IN Security talks to its base station over the <strong>868 MHz ISM band using LoRaWAN, secured end to end with AES-128 encryption</strong> — only devices explicitly registered to your system can ever transmit. The base station connects only to your own control PC (Wi-Fi, LTE, or wired Ethernet), so <strong>patrol data never has to leave your network</strong>.',
-    ],
-    [
-        'number'  => '02',
-        'title'   => 'Precise, Continuous Positioning',
-        'content' => 'A built-in multi-constellation GNSS receiver (GPS, GLONASS, Galileo, BeiDou) logs the tracker\'s exact position <strong>every 15 seconds</strong>, storing up to <strong>500 points on-device</strong> and uploading them the moment it\'s back in range of the base station.',
-    ],
-    [
-        'number'  => '03',
-        'title'   => 'Built for a Full Shift',
-        'content' => 'An onboard battery keeps IN Security running for <strong>several hours of continuous patrol work</strong>. Recharge it with a standard USB-C cable, or use the <strong>dedicated docking station that charges three units at once</strong>.',
-    ],
-    [
-        'number'  => '04',
-        'title'   => 'Two Layers of Guard Safety',
-        'content' => 'A <strong>one-touch panic button</strong> sends an immediate priority alert to the control room. A built-in motion sensor also watches for falls — if the device stays motionless and horizontal past a set time, <strong>the control room is alerted automatically</strong>.',
-    ],
-];
+// Treść w <strong> renderuje się pogrubiona — wypisywana przez wp_kses
+// (nie esc_html), więc bezpiecznie przepuszcza tylko ten jeden tag.
+// Tablica żyje w functions.php (in_guard_specs()), bo ta sama specyfikacja
+// pojawia się też na karcie produktu page-in-guard.php.
+$device_specs = in_guard_specs();
 
 // Zrzuty ekranu z oprogramowania — dopóki plik nie istnieje w assets/images/,
 // pokazuje się placeholder 16:9 zamiast pustej kolumny.
@@ -114,8 +95,29 @@ $control_center_features = [
     [
         'tag'     => 'Historical Data',
         'title'   => 'Archive & Analytics',
-        'content' => 'Filter past patrols by device, date, or time range to review any historical route in detail — spot bottlenecks, recurring delays, or danger zones, and use the data to optimize future routes.',
+        'content' => 'Every checkpoint is automatically classified as early, on-time, late, or missed. Filter past patrols by device, date, or time range to dig into the details — spot bottlenecks, recurring delays, or danger zones, and use the data to optimize future routes.',
         'file'    => 'control-center-archive.png',
+    ],
+];
+
+// Kafle korzyści — celowo mówią o efekcie (compliance, mniej pominiętych
+// obchodów, decyzje kadrowe), nie o mechanizmie, żeby nie dublować sekcji
+// wyżej. Proste ikony zamiast zdjęć.
+$outcomes = [
+    [
+        'title'   => 'Audit-Ready Compliance',
+        'content' => 'Every patrol is timestamped and verified automatically — a ready-made record for audits, clients, or insurance.',
+        'icon'    => '<rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/>',
+    ],
+    [
+        'title'   => 'Fewer Missed Rounds',
+        'content' => 'Automatic verification catches gaps immediately, instead of discovering them after something goes wrong.',
+        'icon'    => '<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>',
+    ],
+    [
+        'title'   => 'Smarter Staffing Decisions',
+        'content' => 'Real patrol data — not guesswork — shows you where to add coverage and where routes can be trimmed.',
+        'icon'    => '<rect x="5" y="12" width="3" height="8"/><rect x="10.5" y="8" width="3" height="12"/><rect x="16" y="4" width="3" height="16"/>',
     ],
 ];
 
@@ -140,7 +142,7 @@ $use_cases = [
     <section class="security-hero">
         <div class="container">
             <h1>Prove Every Patrol Happened <br class="hero-break">— On Route, On Time</h1>
-            <p>IN Security is a LoRa-based tracking solution that manages and verifies security patrol routes — track guards in real time against defined checkpoints and schedules, with no paperwork or guesswork.</p>
+            <p>IN Security is a LoRa-based tracking solution that manages and verifies security patrol routes — track guards in real time against defined checkpoints and schedules, with no paperwork, no guesswork, and no data ever leaving your network.</p>
             <div class="cta-group">
                 <a href="#how-it-works" class="btn btn-outline">See how it works</a>
                 <a href="https://indoornavi.me/#contact" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Talk to us</a>
@@ -151,7 +153,7 @@ $use_cases = [
     <section id="how-it-works" class="security-how">
         <div class="container">
             <h2>IN Security: How It Works</h2>
-            <p class="security-how-intro">Built around the IN Security tracker and a LoRaWAN base station, running entirely on your own network.</p>
+            <p class="security-how-intro">Built around the IN Guard 01 tracker and a LoRaWAN base station, running entirely on your own network.</p>
             <div class="roadmap-wrapper-context how-it-works-steps">
                 <div class="roadmap-connect-line"></div>
                 <div class="roadmap-wrapper">
@@ -181,13 +183,13 @@ $use_cases = [
             <div class="device-usage-grid">
                 <div class="device-usage-media">
                     <?php if ( file_exists( $garda1_render_path ) ) : ?>
-                        <img src="<?php echo esc_url( $garda1_render_url ); ?>" alt="IN Security tracker render" class="device-usage-image">
+                        <img src="<?php echo esc_url( $garda1_render_url ); ?>" alt="IN Guard 01 tracker render" class="device-usage-image">
                     <?php else : ?>
-                        <div class="device-usage-placeholder">IN Security render<br><span>coming soon</span></div>
+                        <div class="device-usage-placeholder">IN Guard 01 render<br><span>coming soon</span></div>
                     <?php endif; ?>
                 </div>
                 <div class="device-usage-content">
-                    <h2>IN Security in a Guard's Pocket</h2>
+                    <h2>IN Guard 01 in a Guard's Pocket</h2>
                     <p class="security-how-intro">No training manual required — just turn it on and go.</p>
                     <ul class="security-how-list">
                         <?php foreach ( $device_usage_points as $point ) : ?>
@@ -204,7 +206,7 @@ $use_cases = [
             <h2>The Hardware</h2>
             <p class="section-subtitle">
                 A single base station supports up to 200 trackers, and additional stations can be added to extend
-                coverage across large or demanding sites. IN Security is currently a working prototype — its final form
+                coverage across large or demanding sites. IN Guard 01 is currently a working prototype — its final form
                 factor can be tailored to your specific requirements.
             </p>
 
@@ -223,7 +225,7 @@ $use_cases = [
     <section class="security-how">
         <div class="container">
             <h2>Inside the Control Center</h2>
-            <p class="security-how-intro">One piece of software, running on your own machine — no external server required.</p>
+            <p class="security-how-intro">One piece of software, running on your own machine — no external server required, and even the map works fully offline.</p>
 
             <div class="feature-showcase">
                 <?php foreach ( $control_center_features as $i => $feature ) : ?>
@@ -248,6 +250,30 @@ $use_cases = [
             <div class="control-center-footnote">
                 <p>The software can also be extended and integrated with other systems if your operation needs it.</p>
                 <a href="https://indoornavi.me/#contact" target="_blank" rel="noopener noreferrer" class="cta-link-secondary">Let's talk about your challenges<span class="cta-arrow">→</span></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="outcomes-section">
+        <div class="container">
+            <h2>Why It Pays Off</h2>
+            <p class="section-subtitle">Beyond verification — measurable impact on compliance, coverage, and cost.</p>
+            <div class="outcomes-grid">
+                <?php foreach ( $outcomes as $outcome ) : ?>
+                    <div class="outcome-tile">
+                        <div class="outcome-tile-body">
+                            <div class="outcome-tile-header">
+                                <div class="outcome-tile-icon">
+                                    <svg viewBox="0 0 24 24" width="26" height="26" style="fill:none;" stroke="#0070f3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                        <?php echo $outcome['icon']; ?>
+                                    </svg>
+                                </div>
+                                <h3><?php echo esc_html( $outcome['title'] ); ?></h3>
+                            </div>
+                            <p><?php echo esc_html( $outcome['content'] ); ?></p>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </section>

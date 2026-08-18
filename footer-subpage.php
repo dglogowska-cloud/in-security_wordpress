@@ -19,6 +19,7 @@
                 <nav class="footer-bottom-nav">
                     <ul>
                         <li><a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a></li>
+                        <li><a href="<?php echo esc_url( home_url( '/in-guard/' ) ); ?>">Product Card</a></li>
                         <li><a href="https://indoornavi.me/#branches" target="_blank" rel="noopener noreferrer">Other products</a></li>
                         <li><a href="https://indoornavi.me/#contact" target="_blank" rel="noopener noreferrer">Contact</a></li>
                         <li><a href="https://indoornavi.me/blog/" target="_blank" rel="noopener noreferrer">Blog</a></li>
