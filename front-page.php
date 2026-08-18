@@ -9,8 +9,10 @@
  * technicznego; render urządzenia po lewej — wstaw jako
  * assets/images/garda1-render.png (przezroczyste tło), do tego czasu
  * pokazuje się placeholder) →
- * "Meet IN Security" (jedyne miejsce z konkretnymi specyfikacjami: LoRaWAN/AES,
- * GNSS/15s/500 punktów, bateria/ładowanie, przycisk+upadek).
+ * "The Hardware" (jedyne miejsce z konkretnymi specyfikacjami: LoRaWAN/AES,
+ * GNSS/15s/500 punktów, bateria/ładowanie, przycisk+upadek — nazwa sekcji
+ * celowo sygnalizuje "tu są dane techniczne", w parze z "Inside the Control
+ * Center" niżej dla oprogramowania).
  *
  * Sekcja "Where IN Security Fits" reużywa klas .services/.tags odziedziczonych
  * z in-monitoring (tam nieużywane, tu dostały wreszcie zastosowanie) — nie
@@ -69,26 +71,51 @@ $how_it_works = [
     ],
 ];
 
+// Fragmenty w <strong> renderują się pogrubione — treść jest wypisywana przez
+// wp_kses (nie esc_html), więc bezpiecznie przepuszcza tylko ten jeden tag.
 $device_specs = [
     [
         'number'  => '01',
         'title'   => 'Long-Range, Encrypted & Fully On-Premise',
-        'content' => 'IN Security talks to its base station over the 868 MHz ISM band using LoRaWAN, secured end to end with AES-128 encryption — only devices explicitly registered to your system can ever transmit. The base station connects only to your own control PC (Wi-Fi, LTE, or wired Ethernet), so patrol data never has to leave your network.',
+        'content' => 'IN Security talks to its base station over the <strong>868 MHz ISM band using LoRaWAN, secured end to end with AES-128 encryption</strong> — only devices explicitly registered to your system can ever transmit. The base station connects only to your own control PC (Wi-Fi, LTE, or wired Ethernet), so <strong>patrol data never has to leave your network</strong>.',
     ],
     [
         'number'  => '02',
         'title'   => 'Precise, Continuous Positioning',
-        'content' => 'A built-in multi-constellation GNSS receiver (GPS, GLONASS, Galileo, BeiDou) logs the tracker\'s exact position every 15 seconds, storing up to 500 points on-device and uploading them the moment it\'s back in range of the base station.',
+        'content' => 'A built-in multi-constellation GNSS receiver (GPS, GLONASS, Galileo, BeiDou) logs the tracker\'s exact position <strong>every 15 seconds</strong>, storing up to <strong>500 points on-device</strong> and uploading them the moment it\'s back in range of the base station.',
     ],
     [
         'number'  => '03',
         'title'   => 'Built for a Full Shift',
-        'content' => 'An onboard battery keeps IN Security running for several hours of continuous patrol work. Recharge it with a standard USB-C cable, or use the dedicated docking station that charges three units at once.',
+        'content' => 'An onboard battery keeps IN Security running for <strong>several hours of continuous patrol work</strong>. Recharge it with a standard USB-C cable, or use the <strong>dedicated docking station that charges three units at once</strong>.',
     ],
     [
         'number'  => '04',
         'title'   => 'Two Layers of Guard Safety',
-        'content' => 'A one-touch panic button sends an immediate priority alert to the control room. A built-in motion sensor can also detect a fall — if the device stays motionless and horizontal past a set time, it raises the alarm automatically.',
+        'content' => 'A <strong>one-touch panic button</strong> sends an immediate priority alert to the control room. A built-in motion sensor also watches for falls — if the device stays motionless and horizontal past a set time, <strong>the control room is alerted automatically</strong>.',
+    ],
+];
+
+// Zrzuty ekranu z oprogramowania — dopóki plik nie istnieje w assets/images/,
+// pokazuje się placeholder 16:9 zamiast pustej kolumny.
+$control_center_features = [
+    [
+        'tag'     => 'Live Tracking',
+        'title'   => 'Live View',
+        'content' => 'Select any tracker from the list and watch its patrol unfold in real time — checkpoint by checkpoint, with the exact arrival time for each one. Time and distance buffers are fully adjustable per route, so verification matches the realities of your site.',
+        'file'    => 'control-center-live-view.png',
+    ],
+    [
+        'tag'     => 'Easy to Manage',
+        'title'   => 'Route & Checkpoint Editor',
+        'content' => 'Add, edit, or remove checkpoints and entire routes in a few clicks — as your facility layout or procedures change, the system changes with you.',
+        'file'    => 'control-center-route-editor.png',
+    ],
+    [
+        'tag'     => 'Historical Data',
+        'title'   => 'Archive & Analytics',
+        'content' => 'Filter past patrols by device, date, or time range to review any historical route in detail — spot bottlenecks, recurring delays, or danger zones, and use the data to optimize future routes.',
+        'file'    => 'control-center-archive.png',
     ],
 ];
 
@@ -99,6 +126,12 @@ $use_cases = [
     'Critical Infrastructure',
     'Retail & Public Venues',
     'Construction Sites',
+    'Data Centers',
+    'Airports & Transit Hubs',
+    'Healthcare Facilities',
+    'Educational Campuses',
+    'Solar & Wind Farms',
+    'Ports & Maritime Terminals',
 ];
 ?>
 
@@ -106,7 +139,7 @@ $use_cases = [
 
     <section class="security-hero">
         <div class="container">
-            <h1>Prove Every Patrol Happened <br>— On Route, On Time</h1>
+            <h1>Prove Every Patrol Happened <br class="hero-break">— On Route, On Time</h1>
             <p>IN Security is a LoRa-based tracking solution that manages and verifies security patrol routes — track guards in real time against defined checkpoints and schedules, with no paperwork or guesswork.</p>
             <div class="cta-group">
                 <a href="#how-it-works" class="btn btn-outline">See how it works</a>
@@ -155,7 +188,7 @@ $use_cases = [
                 </div>
                 <div class="device-usage-content">
                     <h2>IN Security in a Guard's Pocket</h2>
-                    <p class="security-how-intro">As simple to use as a phone — no training manual required.</p>
+                    <p class="security-how-intro">No training manual required — just turn it on and go.</p>
                     <ul class="security-how-list">
                         <?php foreach ( $device_usage_points as $point ) : ?>
                             <li><?php echo wp_kses( $point, array( 'strong' => array() ) ); ?></li>
@@ -168,7 +201,7 @@ $use_cases = [
 
     <section class="device-specs-section">
         <div class="container">
-            <h2>Meet IN Security — Built for the Field</h2>
+            <h2>The Hardware</h2>
             <p class="section-subtitle">
                 A single base station supports up to 200 trackers, and additional stations can be added to extend
                 coverage across large or demanding sites. IN Security is currently a working prototype — its final form
@@ -180,7 +213,7 @@ $use_cases = [
                     <div class="device-spec-card">
                         <div class="number"><?php echo esc_html( $spec['number'] ); ?></div>
                         <h3><?php echo esc_html( $spec['title'] ); ?></h3>
-                        <p><?php echo esc_html( $spec['content'] ); ?></p>
+                        <p><?php echo wp_kses( $spec['content'], array( 'strong' => array() ) ); ?></p>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -191,13 +224,31 @@ $use_cases = [
         <div class="container">
             <h2>Inside the Control Center</h2>
             <p class="security-how-intro">One piece of software, running on your own machine — no external server required.</p>
-            <ul class="security-how-list">
-                <li>Live View shows the ongoing patrol in real time — checkpoint by checkpoint, with the exact time each one was reached.</li>
-                <li>Time and distance buffers are fully adjustable per route, so verification matches the realities of your site.</li>
-                <li>Routes can be added, edited, or removed at any time as your facility or procedures change.</li>
-                <li>The Archive lets you filter past patrols by device, date, or time range to review any historical route in detail.</li>
-                <li>The software can be extended and integrated with other systems if your operation needs it.</li>
-            </ul>
+
+            <div class="feature-showcase">
+                <?php foreach ( $control_center_features as $i => $feature ) : ?>
+                    <?php $screenshot_path = get_template_directory() . '/assets/images/' . $feature['file']; ?>
+                    <div class="feature-row <?php echo ( $i % 2 === 1 ) ? 'feature-row-reverse' : ''; ?>">
+                        <div class="feature-media">
+                            <?php if ( file_exists( $screenshot_path ) ) : ?>
+                                <img src="<?php echo esc_url( $tiles_dir . $feature['file'] ); ?>" alt="<?php echo esc_attr( $feature['title'] ); ?> screenshot" class="feature-screenshot">
+                            <?php else : ?>
+                                <div class="feature-placeholder"><?php echo esc_html( $feature['title'] ); ?><br><span>screenshot coming soon</span></div>
+                            <?php endif; ?>
+                        </div>
+                        <div class="feature-text">
+                            <span class="feature-tag"><?php echo esc_html( $feature['tag'] ); ?></span>
+                            <h3><?php echo esc_html( $feature['title'] ); ?></h3>
+                            <p><?php echo esc_html( $feature['content'] ); ?></p>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+
+            <div class="control-center-footnote">
+                <p>The software can also be extended and integrated with other systems if your operation needs it.</p>
+                <a href="https://indoornavi.me/#contact" target="_blank" rel="noopener noreferrer" class="cta-link-secondary">Let's talk about your challenges<span class="cta-arrow">→</span></a>
+            </div>
         </div>
     </section>
 

@@ -88,6 +88,58 @@
 }());
 </script>
 
+<script>
+(function () {
+    var targets = document.querySelectorAll(
+        '.security-page .container > *, .step-card, .device-spec-card, .feature-row, .roadmap-connect-line'
+    );
+    if (!targets.length) return;
+
+    var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    targets.forEach(function (el, i) {
+        el.classList.add('reveal-on-scroll');
+        // Linia leży za kartami (niższy z-index) — dopóki karty są półprzezroczyste
+        // w trakcie fade-in, linia prześwituje przez nie i wygląda jakby była na
+        // wierzchu. Wchodzi więc dopiero po tym, jak reszta sekwencji się skończy.
+        if (el.classList.contains('roadmap-connect-line')) {
+            el.style.transitionDelay = '0.45s';
+        } else {
+            el.style.transitionDelay = (i % 5) * 0.08 + 's';
+        }
+    });
+
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+        targets.forEach(function (el) {
+            el.classList.add('is-visible', 'reveal-settled');
+            el.style.transitionDelay = '';
+        });
+        return;
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                var el = entry.target;
+                el.classList.add('is-visible');
+                observer.unobserve(el);
+                // transitionDelay było tylko po to, żeby wejście na scrollu
+                // "falowało" — zostawione na stałe kazałoby też hoverowi czekać
+                // te same 0-0.45s. .reveal-settled podmienia też czas trwania
+                // transform na szybszy, żeby hover nie dziedziczył wolnego wjazdu.
+                // Robimy to dopiero, gdy wejście na pewno się skończyło (delay+duration).
+                window.setTimeout(function () {
+                    el.style.transitionDelay = '';
+                    el.classList.add('reveal-settled');
+                }, 1150);
+            }
+        });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+    targets.forEach(function (el) { observer.observe(el); });
+}());
+</script>
+
 <?php wp_footer(); ?>
 </body>
 </html>
