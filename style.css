@@ -3527,6 +3527,16 @@ nav a:hover {
     transition: all 0.3s ease;
 }
 
+/* Lewe wyrównanie (nie center jak .control-center-footnote), bo .container
+   tej sekcji ma align-items: flex-start. */
+.device-specs-footnote {
+    margin-top: 30px;
+}
+
+.device-specs-footnote .cta-link-secondary:hover .cta-arrow {
+    transform: translateX(5px);
+}
+
 .device-spec-card:hover {
     /* !important: musi wygrać z .reveal-on-scroll.is-visible{transform}, tej
        samej specyficzności, dodawanym przez efekt pojawiania się przy scrollu. */

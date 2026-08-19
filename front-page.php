@@ -1,13 +1,13 @@
 <?php
 /*
  * Treść in-security — LoRa-based tracking do weryfikacji obchodów ochrony.
- * "IN Security" to nazwa systemu/marki, "IN Guard 01" to nazwa konkretnego
- * urządzenia (trackera) — rozróżniamy to konsekwentnie w treści poniżej.
+ * "IN Security" to nazwa systemu/marki, "IN Guard" to nazwa konkretnego
+ * urządzenia (trackera), a IN Guard 01 to konkretna wersja tego urządzenia — rozróżniamy to konsekwentnie w treści poniżej.
  *
  * Trzy sekcje celowo pokazują trzy różne perspektywy, żeby się nie dublować —
  * żadna liczba/fakt techniczny nie powtarza się w więcej niż jednym miejscu:
  * "How It Works" (proces na poziomie ogólnym, bez twardych liczb) →
- * "IN Guard 01 in a Guard's Pocket" (historia dnia pracy strażnika, zero żargonu
+ * "IN Guard in a Guard's Pocket" (historia dnia pracy strażnika, zero żargonu
  * technicznego; render urządzenia po lewej — wstaw jako
  * assets/images/in-guard-render.png (przezroczyste tło), do tego czasu
  * pokazuje się placeholder) →
@@ -24,6 +24,17 @@ get_header();
 
 $tiles_dir = get_template_directory_uri() . '/assets/images/';
 
+// Znajdujemy stronę po przypisanym szablonie, nie po hardkodowanym slugu —
+// karta produktu (page-in-guard.php) może zostać przeniesiona/zmieniona bez
+// psucia tego linku.
+$in_guard_product_pages = get_posts( array(
+    'post_type'      => 'page',
+    'posts_per_page' => 1,
+    'meta_key'       => '_wp_page_template',
+    'meta_value'     => 'page-in-guard.php',
+) );
+$in_guard_product_url = ! empty( $in_guard_product_pages ) ? get_permalink( $in_guard_product_pages[0] ) : '';
+
 // Render ma przezroczyste tło, dlatego PNG (nie JPG, który by je zabił).
 $garda1_render_path = get_template_directory() . '/assets/images/in-guard-render.png';
 $garda1_render_url  = $tiles_dir . 'in-guard-render.png';
@@ -32,9 +43,9 @@ $garda1_render_url  = $tiles_dir . 'in-guard-render.png';
 // wp_kses (nie esc_html), więc bezpiecznie przepuszcza tylko ten jeden tag.
 $device_usage_points = [
     '<strong>Start of shift:</strong> clip it on, press the power button, and start walking the route — that\'s the entire setup.',
-    '<strong>During the patrol:</strong> IN Guard 01 quietly tracks itself in the background, with nothing for the guard to check or log by hand.',
+    '<strong>During the patrol:</strong> IN Guard quietly tracks itself in the background, with nothing for the guard to check or log by hand.',
     '<strong>If something feels wrong:</strong> one press of the button sends an immediate alarm to the control room — no radio, no phone call, no hesitation.',
-    '<strong>If a guard goes down:</strong> IN Guard 01 notices on its own and raises the alarm automatically, even if they can\'t reach the button.',
+    '<strong>If a guard goes down:</strong> IN Guard notices on its own and raises the alarm automatically, even if they can\'t reach the button.',
     '<strong>End of shift:</strong> drop it in the charger, and it\'s ready to go for the next patrol.',
 ];
 
@@ -48,7 +59,7 @@ $how_it_works = [
     [
         'number'  => '02',
         'title'   => 'Track in Real Time',
-        'content' => 'As the guard walks the route, IN Guard 01 continuously records its exact position in the background.',
+        'content' => 'As the guard walks the route, IN Guard continuously records its exact position in the background.',
         'icon'    => '<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/>',
     ],
     [
@@ -153,7 +164,7 @@ $use_cases = [
     <section id="how-it-works" class="security-how">
         <div class="container">
             <h2>IN Security: How It Works</h2>
-            <p class="security-how-intro">Built around the IN Guard 01 tracker and a LoRaWAN base station, running entirely on your own network.</p>
+            <p class="security-how-intro">Built around the IN Guard tracker and a LoRaWAN base station, running entirely on your own network.</p>
             <div class="roadmap-wrapper-context how-it-works-steps">
                 <div class="roadmap-connect-line"></div>
                 <div class="roadmap-wrapper">
@@ -183,13 +194,13 @@ $use_cases = [
             <div class="device-usage-grid">
                 <div class="device-usage-media">
                     <?php if ( file_exists( $garda1_render_path ) ) : ?>
-                        <img src="<?php echo esc_url( $garda1_render_url ); ?>" alt="IN Guard 01 tracker render" class="device-usage-image">
+                        <img src="<?php echo esc_url( $garda1_render_url ); ?>" alt="IN Guard tracker render" class="device-usage-image">
                     <?php else : ?>
-                        <div class="device-usage-placeholder">IN Guard 01 render<br><span>coming soon</span></div>
+                        <div class="device-usage-placeholder">IN Guard render<br><span>coming soon</span></div>
                     <?php endif; ?>
                 </div>
                 <div class="device-usage-content">
-                    <h2>IN Guard 01 in a Guard's Pocket</h2>
+                    <h2>IN Guard in a Guard's Pocket</h2>
                     <p class="security-how-intro">No training manual required — just turn it on and go.</p>
                     <ul class="security-how-list">
                         <?php foreach ( $device_usage_points as $point ) : ?>
@@ -206,7 +217,7 @@ $use_cases = [
             <h2>The Hardware</h2>
             <p class="section-subtitle">
                 A single base station supports up to 200 trackers, and additional stations can be added to extend
-                coverage across large or demanding sites. IN Guard 01 is currently a working prototype — its final form
+                coverage across large or demanding sites. IN Guard is currently a working prototype — its final form
                 factor can be tailored to your specific requirements.
             </p>
 
@@ -219,6 +230,12 @@ $use_cases = [
                     </div>
                 <?php endforeach; ?>
             </div>
+
+            <?php if ( $in_guard_product_url ) : ?>
+                <div class="device-specs-footnote">
+                    <a href="<?php echo esc_url( $in_guard_product_url ); ?>" class="cta-link-secondary">See full spec sheet<span class="cta-arrow">→</span></a>
+                </div>
+            <?php endif; ?>
         </div>
     </section>
 

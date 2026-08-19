@@ -81,7 +81,7 @@ function ins_accent( $escaped_text ) {
     return preg_replace( '/\*\*(.*?)\*\*/s', '<span class="heading-accent">$1</span>', $escaped_text );
 }
 
-// Specyfikacja urządzenia IN Guard 01 — współdzielona między front-page.php
+// Specyfikacja urządzenia IN Guard — współdzielona między front-page.php
 // (sekcja "The Hardware") a page-in-guard.php (karta produktu), żeby nie
 // trzymać tej samej treści w dwóch miejscach.
 function in_guard_specs() {
@@ -89,7 +89,7 @@ function in_guard_specs() {
         [
             'number'  => '01',
             'title'   => 'Long-Range, Encrypted & Fully On-Premise',
-            'content' => 'IN Guard 01 talks to its base station over the <strong>868 MHz ISM band using LoRaWAN, secured end to end with AES-128 encryption</strong> — only devices explicitly registered to your system can ever transmit. The base station connects only to your own control PC (Wi-Fi, LTE, or wired Ethernet), so <strong>patrol data never has to leave your network</strong>.',
+            'content' => 'IN Guard talks to its base station over the <strong>868 MHz ISM band using LoRaWAN, secured end to end with AES-128 encryption</strong> — only devices explicitly registered to your system can ever transmit. The base station connects only to your own control PC (Wi-Fi, LTE, or wired Ethernet), so <strong>patrol data never has to leave your network</strong>.',
         ],
         [
             'number'  => '02',
@@ -99,7 +99,7 @@ function in_guard_specs() {
         [
             'number'  => '03',
             'title'   => 'Built for a Full Shift',
-            'content' => 'An onboard battery keeps IN Guard 01 running for <strong>several hours of continuous patrol work</strong>. Recharge it with a standard USB-C cable, or use the <strong>dedicated docking station that charges three units at once</strong>.',
+            'content' => 'An onboard battery keeps IN Guard running for <strong>several hours of continuous patrol work</strong>. Recharge it with a standard USB-C cable, or use the <strong>dedicated docking station that charges three units at once</strong>.',
         ],
         [
             'number'  => '04',
