@@ -3167,6 +3167,19 @@ nav a:hover {
     mask-size: contain;
 }
 
+/* Wyrównanie do dołu zamiast do środka — tylko w tej sekcji — żeby dolna
+   krawędź zdjęcia siedziała na wysokości ostatniej linijki tekstu. */
+#in-sense-how-it-works .device-usage-grid {
+    align-items: end;
+}
+
+/* Inna ikona punktora tylko w tej sekcji (checkmark zamiast pinezki lokalizacji
+   — ta ostatnia kojarzy się z trasą/patrolem IN Guard, nie z czujnikiem). */
+#in-sense-how-it-works .security-how-list li::before {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12l5 5L20 7'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12l5 5L20 7'/%3E%3C/svg%3E");
+}
+
 .security-cta {
     background: var(--canva-blue);
     color: #ffffff;
@@ -3254,6 +3267,62 @@ nav a:hover {
     filter: drop-shadow(0 10px 14px rgba(11, 17, 22, 0.18)) drop-shadow(0 34px 55px rgba(11, 17, 22, 0.25));
 }
 
+/* Odznaka w kółku na rogu zdjęcia (wzorem in-vitals) — .device-usage-image-wrap
+   trzyma się rozmiaru samego zdjęcia (nie całej, szerszej kolumny
+   .device-usage-media), więc odznaka trzyma się rogu niezależnie od
+   szerokości layoutu. */
+.device-usage-image-wrap {
+    position: relative;
+    display: inline-block;
+}
+
+.device-usage-badge {
+    position: absolute;
+    right: -45px;
+    bottom: -20px;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 10px 24px rgba(11, 17, 22, 0.35);
+}
+
+@media (max-width: 480px) {
+    .device-usage-badge {
+        width: 120px;
+        height: 120px;
+        right: -10px;
+        bottom: -10px;
+    }
+}
+
+/* Prawdziwe zdjęcie (nie przezroczysty render urządzenia) — wypełnia kolumnę,
+   z zaokrągleniem i cieniem zamiast drop-shadow dopasowanego do sylwetki. */
+.device-usage-photo {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(11, 17, 22, 0.15);
+}
+
+/* Odwrócenie stron: treść z lewej (szersza kolumna), zdjęcie z prawej —
+   dla odmiany względem sąsiednich sekcji, które mają zdjęcie po lewej.
+   Kolumny muszą też zamienić proporcje, inaczej treść zostałaby węższa. */
+.device-usage-grid--reverse {
+    grid-template-columns: 1.3fr 1fr;
+}
+
+.device-usage-grid--reverse .device-usage-content {
+    order: 1;
+}
+
+.device-usage-grid--reverse .device-usage-media {
+    order: 2;
+}
+
 .device-usage-placeholder {
     width: 240px;
     height: 240px;
@@ -3298,6 +3367,13 @@ nav a:hover {
     }
 
     .device-usage-media {
+        order: -1;
+    }
+
+    /* Wygrywa z .device-usage-grid--reverse .device-usage-media{order:2}
+       (wyższa specyficzność) — na mobile zdjęcie zawsze ma być na górze,
+       niezależnie od odwróconego układu na desktopie. */
+    .device-usage-grid--reverse .device-usage-media {
         order: -1;
     }
 }
@@ -3402,6 +3478,51 @@ nav a:hover {
     font-weight: 400;
     font-size: 0.85rem;
     margin-top: 4px;
+}
+
+/* Wykres w sekcji "From Alert to Drowsy" jest źródłowo szeroki i niski
+   (1920x650, ~3:1) — .feature-screenshot/.feature-placeholder domyślnie
+   liczą na zrzuty ekranu 16:9, więc dociągamy proporcje i odstępy tu. */
+.sample-chart-list {
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px 32px;
+    text-align: left;
+}
+
+.sample-chart-list li {
+    padding-left: 26px;
+}
+
+.sample-chart-list li::before {
+    content: '\203A';
+    width: auto;
+    height: auto;
+    background: none;
+    -webkit-mask-image: none;
+    mask-image: none;
+    color: var(--canva-blue);
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 1;
+    top: -4px;
+}
+
+@media (max-width: 900px) {
+    .sample-chart-list {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+}
+
+.sample-chart-image {
+    max-width: 900px;
+    margin: 8px auto 40px;
+}
+
+.sample-chart-placeholder {
+    aspect-ratio: 3 / 1;
 }
 
 .control-center-footnote {
@@ -4018,5 +4139,119 @@ nav a:hover {
         flex-wrap: wrap;
         gap: 12px;
         margin-top: 30px;
+    }
+}
+
+/* Hub dwóch narzędzi zaraz po hero — po jednym zdaniu + małe zdjęcie +
+   link do właściwej sekcji "How It Works" niżej na stronie. */
+.platform-overview-section {
+    background: var(--section-light);
+    padding: 70px 0;
+}
+
+.platform-overview-section h2 {
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    color: var(--primary-bg);
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+@media (max-width: 768px) {
+    .platform-overview-section h2 {
+        font-size: 2rem;
+        margin-bottom: 24px;
+    }
+}
+
+.platform-overview-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+}
+
+.platform-tile {
+    background: #ffffff;
+    border: 1px solid rgba(11, 17, 22, 0.08);
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+}
+
+.platform-tile-visual {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    background: var(--section-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.platform-tile-visual-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    filter: brightness(1.5) saturate(0.45) contrast(0.9);
+}
+
+.platform-tile-device-image {
+    position: relative;
+    z-index: 1;
+    max-width: 42%;
+    max-height: 75%;
+    filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.55));
+}
+
+.platform-tile-device-image--zoomed {
+    max-width: 68%;
+    max-height: 95%;
+}
+
+.platform-tile-placeholder {
+    position: relative;
+    z-index: 1;
+    width: 90px;
+    height: 90px;
+    border: 2px dashed rgba(11, 17, 22, 0.2);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: rgba(11, 17, 22, 0.4);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-align: center;
+    background: #ffffff;
+}
+
+.platform-tile h3 {
+    font-size: 1.4rem;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    color: var(--primary-bg);
+    margin-bottom: 10px;
+}
+
+.platform-tile p {
+    color: #444444;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    margin-bottom: 16px;
+}
+
+.platform-tile .cta-link-secondary {
+    margin-top: 0;
+}
+
+@media (max-width: 700px) {
+    .platform-overview-grid {
+        grid-template-columns: 1fr;
     }
 }
