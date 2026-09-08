@@ -1747,7 +1747,7 @@ nav a:hover {
     text-transform: uppercase;
     font-size: 0.85rem;
     letter-spacing: 2px;
-    color: var(--canva-blue);
+    color: rgba(0, 112, 243, 0.65); /* Przygaszony --canva-blue, nie pełny odcień */
     font-weight: 700;
     margin-bottom: 15px;
 }
@@ -3248,6 +3248,42 @@ nav a:hover {
     padding: 100px 0;
 }
 
+/* Delikatna grafika trasy patrolowej w tle "IN Guard in a Guard's Pocket" —
+   tylko ta jedna sekcja (nie cała .security-device-usage, bo tej klasy
+   używają też sekcje IN Sense). Osobna warstwa (::before) zamiast opacity
+   na całej sekcji, żeby przygasić tylko obrazek, nie treść. */
+#how-it-works {
+    position: relative;
+    overflow: hidden;
+}
+
+#how-it-works::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('assets/images/in-guard-pattern.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% auto;
+    opacity: 0.1;
+    pointer-events: none;
+    z-index: 0;
+}
+
+#how-it-works .container {
+    position: relative;
+    z-index: 1;
+}
+
+/* Lista ma 5 podpunktów, więc jest wyraźnie wyższa niż zdjęcie urządzenia —
+   przy domyślnym align-items:center zdjęcie (razem z cieniem pod spodem)
+   ląduje na środku sekcji, z dużą pustą przestrzenią pod spodem, przez co
+   cień "unosi się" osobno, blisko dolnej krawędzi sekcji. Wyrównanie do góry
+   trzyma go bliżej treści. */
+#how-it-works .device-usage-grid {
+    align-items: start;
+}
+
 .device-usage-grid {
     display: grid;
     grid-template-columns: 1fr 1.3fr;
@@ -3264,7 +3300,7 @@ nav a:hover {
     max-width: 100%;
     width: 420px;
     display: block;
-    filter: drop-shadow(0 10px 14px rgba(11, 17, 22, 0.18)) drop-shadow(0 34px 55px rgba(11, 17, 22, 0.25));
+    filter: drop-shadow(0 8px 10px rgba(11, 17, 22, 0.15)) drop-shadow(0 18px 26px rgba(11, 17, 22, 0.18));
 }
 
 /* Odznaka w kółku na rogu zdjęcia (wzorem in-vitals) — .device-usage-image-wrap
@@ -3279,13 +3315,18 @@ nav a:hover {
 .device-usage-badge {
     position: absolute;
     right: -45px;
-    bottom: -20px;
+    bottom: -40px;
     width: 180px;
     height: 180px;
     border-radius: 50%;
     object-fit: cover;
     border: 4px solid rgba(255, 255, 255, 0.9);
     box-shadow: 0 10px 24px rgba(11, 17, 22, 0.35);
+    transition: transform 0.3s ease;
+}
+
+.device-usage-badge:hover {
+    transform: scale(1.08);
 }
 
 @media (max-width: 480px) {
@@ -3375,6 +3416,15 @@ nav a:hover {
        niezależnie od odwróconego układu na desktopie. */
     .device-usage-grid--reverse .device-usage-media {
         order: -1;
+    }
+
+    /* Na mobile sekcja robi się dużo wyższa (kolumny się składają), a węższa
+       (mniejszy viewport) — przy background-size: 100% auto obrazek 1920x1080
+       skalowałby się do wąskiego, niskiego paska na środku i praktycznie
+       znikał. "cover" wypełnia całą (teraz pionową) sekcję. */
+    #how-it-works::before {
+        background-size: 200% auto;
+        background-position: center top;
     }
 }
 
@@ -3608,7 +3658,14 @@ nav a:hover {
 .device-specs-section {
     background-color: var(--section-light);
     color: var(--primary-bg);
-    padding: 70px 0;
+    padding: 70px 0 30px;
+}
+
+/* .security-how dziedziczy padding-top:100px z ogólnej reguły `section` —
+   w połączeniu z .device-specs-section tuż nad nią dawało bardzo szeroki,
+   pusty pas przed "Inside the Control Center". */
+#control-center {
+    padding-top: 40px;
 }
 
 .device-specs-section .container {
@@ -3692,14 +3749,31 @@ nav a:hover {
 @media (max-width: 768px) {
     .device-specs-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
     }
 
     .device-specs-section h2 {
         font-size: 2rem;
+        line-height: 1.15;
     }
 
     .device-specs-section .section-subtitle {
         font-size: 1.05rem;
+        text-align: center;
+    }
+
+    /* 4 karty w jednej kolumnie zamiast 2, więc każdy zaoszczędzony px
+       paddingu/marginesu mnoży się razy 4 w długości scrolla. */
+    .device-spec-card {
+        padding: 18px;
+    }
+
+    .device-spec-card .number {
+        margin-bottom: 6px;
+    }
+
+    .device-spec-card h3 {
+        margin-bottom: 6px;
     }
 }
 
@@ -3748,6 +3822,7 @@ nav a:hover {
 
     .security-how h2 {
         font-size: 2rem;
+        line-height: 1.15;
     }
 
     .security-how-intro {
@@ -3769,7 +3844,24 @@ nav a:hover {
     .how-it-works-steps .step-card {
         flex: 1 1 100%;
         max-width: 100%;
+        padding-top: 16px !important;
         padding-bottom: 16px !important;
+    }
+
+    /* Same karty są już niskie na paddingu, ale wewnętrzne odstępy
+       (nagłówek ikona+STEP, tytuł, akapit) same w sobie dawały ~47px
+       "powietrza" na kartę — stąd wciąż wyglądały wysoko mimo mniejszego
+       paddingu. */
+    .how-it-works-steps .step-header {
+        margin-bottom: 10px !important;
+    }
+
+    .how-it-works-steps .step-card h3 {
+        margin-bottom: 6px !important;
+    }
+
+    .how-it-works-steps .step-body {
+        margin-bottom: 6px !important;
     }
 }
 /* Płynne pojawianie się elementów przy scrollowaniu (klasy dodawane przez
@@ -3913,6 +4005,7 @@ nav a:hover {
 
     .outcomes-section h2 {
         font-size: 2rem !important;
+        line-height: 1.15;
     }
 
     .outcomes-section .section-subtitle {
@@ -4162,6 +4255,7 @@ nav a:hover {
     .platform-overview-section h2 {
         font-size: 2rem;
         margin-bottom: 24px;
+        line-height: 1.15;
     }
 }
 
@@ -4197,7 +4291,14 @@ nav a:hover {
     inset: 0;
     background-size: cover;
     background-position: center;
-    filter: brightness(1.5) saturate(0.45) contrast(0.9);
+    filter: brightness(1.05) blur(0.6px);
+}
+
+.platform-tile-visual-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.55);
 }
 
 .platform-tile-device-image {
@@ -4206,6 +4307,11 @@ nav a:hover {
     max-width: 42%;
     max-height: 75%;
     filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.55));
+    transition: transform 0.3s ease;
+}
+
+.platform-tile:hover .platform-tile-device-image {
+    transform: scale(1.08);
 }
 
 .platform-tile-device-image--zoomed {
@@ -4253,5 +4359,44 @@ nav a:hover {
 @media (max-width: 700px) {
     .platform-overview-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+/* Mniejsze odstępy między sekcjami na mobile. Umyślnie na samym końcu pliku —
+   większość tych klas ma własny padding zdefiniowany dalej w kaskadzie niż
+   ogólna reguła `section`, więc przy tej samej specyficzności wygrywa
+   kolejność w źródle; blok musi być ostatni, żeby faktycznie nadpisał. */
+@media (max-width: 768px) {
+    section {
+        padding: 60px 0;
+    }
+
+    .security-device-usage {
+        padding: 60px 0;
+    }
+
+    .security-how {
+        padding-top: 60px;
+    }
+
+    .outcomes-section,
+    .platform-overview-section,
+    .device-specs-section {
+        padding: 45px 0;
+    }
+
+    .security-cta {
+        padding: 3rem 0 2.5rem;
+    }
+
+    .security-cta h2 {
+        line-height: 1.15;
+    }
+
+    /* Odstęp między zawiniętymi wierszami wewnątrz podpunktów "IN Guard in
+       a Guard's Pocket" (nie odstęp między samymi podpunktami — ten steruje
+       .device-usage-content .security-how-list{gap:10px}, zostaje bez zmian). */
+    #how-it-works .security-how-list li {
+        line-height: 1.35;
     }
 }

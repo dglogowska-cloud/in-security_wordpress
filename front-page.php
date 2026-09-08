@@ -241,7 +241,7 @@ $use_cases = [
     <section class="security-hero">
         <div class="container">
             <h1>Every Patrol Proven. <br class="hero-break">Every Post Watched.</h1>
-            <p>IN Security brings together two tools for managing on-site security: IN Guard verifies that patrol routes are actually walked, on time, while IN Sense watches over guards holding a stationary post. Both can feed into a single Control Center, so your whole security operation can be monitored — and optimized — from one place.</p>
+            <p><strong>IN Security</strong> brings patrol verification and post monitoring together in one platform — so your entire security operation runs from a single <strong>Control Center</strong>.</p>
             <div class="cta-group">
                 <a href="#platform-overview" class="btn btn-outline">Read more</a>
                 <a href="https://indoornavi.me/#contact" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Talk to us</a>
@@ -311,6 +311,7 @@ $use_cases = [
 
     <section id="how-it-works" class="security-device-usage">
         <div class="container">
+            <span class="section-eyebrow">IN Guard</span>
             <div class="device-usage-grid">
                 <div class="device-usage-media">
                     <div class="device-usage-image-wrap">
@@ -393,7 +394,7 @@ $use_cases = [
         </div>
     </section>
 
-    <section class="security-how">
+    <section id="control-center" class="security-how">
         <div class="container">
             <h2>Inside the Control Center</h2>
             <p class="security-how-intro">One piece of software, running on your own machine — no external server, no subscription fees, and even the map works fully offline. The same Control Center will also surface IN Sense alerts, right alongside your patrol data — meet IN Sense next.</p>
@@ -427,6 +428,7 @@ $use_cases = [
 
     <section id="meet-in-sense" class="security-device-usage">
         <div class="container">
+            <span class="section-eyebrow">IN Sense</span>
             <div class="device-usage-grid">
                 <div class="device-usage-media">
                     <?php if ( file_exists( $in_sense_render_path ) ) : ?>
