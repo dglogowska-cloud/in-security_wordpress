@@ -44,7 +44,8 @@
 
         <nav class="footer-nav">
             <a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a>
-            <a href="<?php echo esc_url( home_url( '/in-guard/' ) ); ?>">Product Card</a>
+            <a href="<?php echo esc_url( home_url( '/in-guard/' ) ); ?>">IN Guard</a>
+            <a href="<?php echo esc_url( home_url( '/in-sense/' ) ); ?>">IN Sense</a>
             <a href="https://indoornavi.me/#branches" target="_blank" rel="noopener noreferrer">Other products</a>
             <a href="https://indoornavi.me/#contact" target="_blank" rel="noopener noreferrer">Contact</a>
             <a href="https://indoornavi.me/blog/" target="_blank" rel="noopener noreferrer">Blog</a>
@@ -138,6 +139,48 @@
     }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
 
     targets.forEach(function (el) { observer.observe(el); });
+}());
+</script>
+
+<script>
+(function () {
+    // Na mobile 14 pigułek "Where IN Security Fits" pokazuje się po kilka
+    // naraz (grupy po 4, owinięte w .tags-group), zmieniając się co 3s z
+    // płynnym przenikaniem (position:absolute + opacity w @media, patrz
+    // style.css) — dzięki temu sekcja ma stałą wysokość, a nie "skacze" w
+    // dół, gdy kolejna grupa ma więcej wierszy. Na desktopie
+    // .tags-group{display:contents} usuwa wrapper z layoutu, więc to
+    // grupowanie nie ma tam żadnego efektu wizualnego.
+    var container = document.querySelector('.services .tags');
+    var tagsList = container ? container.querySelectorAll('.tag') : null;
+    if (!container || !tagsList || !tagsList.length) return;
+
+    var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return; // zostają płaskie, wszystkie widoczne naraz, bez rotacji
+
+    var groupSize = 4;
+    var tagsArray = Array.prototype.slice.call(tagsList);
+    var groups = [];
+    for (var i = 0; i < tagsArray.length; i += groupSize) {
+        groups.push(tagsArray.slice(i, i + groupSize));
+    }
+    if (groups.length <= 1) return;
+
+    var groupEls = groups.map(function (group) {
+        var groupEl = document.createElement('div');
+        groupEl.className = 'tags-group';
+        group.forEach(function (tag) { groupEl.appendChild(tag); });
+        container.appendChild(groupEl);
+        return groupEl;
+    });
+
+    var current = 0;
+    groupEls[current].classList.add('is-tag-active');
+    setInterval(function () {
+        groupEls[current].classList.remove('is-tag-active');
+        current = (current + 1) % groupEls.length;
+        groupEls[current].classList.add('is-tag-active');
+    }, 3000);
 }());
 </script>
 

@@ -47,6 +47,14 @@ $in_guard_product_pages = get_posts( array(
 ) );
 $in_guard_product_url = ! empty( $in_guard_product_pages ) ? get_permalink( $in_guard_product_pages[0] ) : '';
 
+$in_sense_product_pages = get_posts( array(
+    'post_type'      => 'page',
+    'posts_per_page' => 1,
+    'meta_key'       => '_wp_page_template',
+    'meta_value'     => 'page-in-sense.php',
+) );
+$in_sense_product_url = ! empty( $in_sense_product_pages ) ? get_permalink( $in_sense_product_pages[0] ) : '';
+
 // Render ma przezroczyste tło, dlatego PNG (nie JPG, który by je zabił).
 $garda1_render_path = get_template_directory() . '/assets/images/in-guard-render.png';
 $garda1_render_url  = $tiles_dir . 'in-guard-render.png';
@@ -60,7 +68,7 @@ $in_guard_pocket_badge_url  = $tiles_dir . 'in-guard-pocket.jpg';
 // Fragmenty w <strong> renderują się pogrubione — lista jest wypisywana przez
 // wp_kses (nie esc_html), więc bezpiecznie przepuszcza tylko ten jeden tag.
 $device_usage_points = [
-    '<strong>Start of shift:</strong> clip it on, press the power button, and start walking the route — that\'s the entire setup.',
+    '<strong>Start of shift:</strong> press the power button, put it in the pocket, and start walking the route — that\'s the entire setup.',
     '<strong>During the patrol:</strong> IN Guard quietly tracks itself in the background, with nothing for the guard to check or log by hand.',
     '<strong>If something feels wrong:</strong> one press of the button sends an immediate alarm to the control room — no radio, no phone call, no hesitation.',
     '<strong>If a guard goes down:</strong> IN Guard notices on its own and raises the alarm automatically, even if they can\'t reach the button.',
@@ -132,51 +140,39 @@ $control_center_features = [
 // Kafle korzyści — celowo mówią o efekcie (compliance, mniej pominiętych
 // obchodów, decyzje kadrowe), nie o mechanizmie, żeby nie dublować sekcji
 // wyżej. Proste ikony zamiast zdjęć. Dwa ostatnie dotyczą IN Sense.
+// Skompresowane z 9 do 6 kafli (2026-09-09) — łączy blisko powiązane pary
+// (compliance+coverage, missed rounds+instant alerts, dashboard+integracje),
+// żeby sekcja czytała się szybciej. Żaden fakt nie zniknął, tylko się połączył.
 $outcomes = [
     [
         'title'   => 'Audit-Ready Compliance',
-        'content' => 'Every patrol is timestamped and verified automatically — a ready-made record for audits, clients, or insurance.',
+        'content' => 'Every patrol and every stationary post is timestamped and verified automatically — a ready-made record for audits, clients, or insurance.',
         'icon'    => '<rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/>',
     ],
     [
-        'title'   => 'Fewer Missed Rounds',
-        'content' => 'Automatic verification catches gaps immediately, instead of discovering them after something goes wrong.',
+        'title'   => 'Nothing Falls Through the Cracks',
+        'content' => 'A missed checkpoint is flagged immediately. At a stationary post, sudden movement, a struggle, or a suspected fall triggers an instant alert.',
         'icon'    => '<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>',
     ],
     [
         'title'   => 'Smarter Staffing Decisions',
-        'content' => 'Real patrol data — not guesswork — shows you where to add coverage and where routes can be trimmed, raising team efficiency without adding headcount.',
+        'content' => 'Real patrol data — not guesswork — shows you where to add coverage and where routes can be trimmed, raising efficiency without adding headcount.',
         'icon'    => '<rect x="5" y="12" width="3" height="8"/><rect x="10.5" y="8" width="3" height="12"/><rect x="16" y="4" width="3" height="16"/>',
     ],
     [
         'title'   => 'Complete Anonymity',
-        'content' => 'No cameras, no image analysis — guards aren\'t watched on video, only whether they\'re alert.',
+        'content' => 'No cameras, no image analysis — across both tools, guards are monitored for presence and alertness, never watched or recorded like on video.',
         'icon'    => '<path d="M4 8h2l1.5-2h9L18 8h2a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.2"/><path d="M2 2l20 20"/>',
     ],
     [
-        'title'   => 'One Dashboard for Everything',
-        'content' => 'IN Sense alerts and IN Guard patrol data both land in the same Control Center — one system for the whole security operation.',
+        'title'   => 'One Platform, Built to Extend',
+        'content' => 'IN Sense alerts and IN Guard patrol data may land in the same Control Center, which can also integrate with your other security systems.',
         'icon'    => '<circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7.5 7.5L10.5 16.5M16.5 7.5L13.5 16.5M8 6h8"/>',
     ],
     [
-        'title'   => 'Built to Extend',
-        'content' => 'The Control Center can integrate with your existing systems — access control, alarms, or other software — as your operation grows.',
-        'icon'    => '<path d="M9 15l6-6"/><path d="M8 12l-2 2a3 3 0 0 0 4 4l2-2"/><path d="M16 12l2-2a3 3 0 0 0-4-4l-2 2"/>',
-    ],
-    [
         'title'   => 'Lower Staff Turnover',
-        'content' => 'The SOS button and fall detection give guards a constant sense of safety on the job — the kind of support that helps keep good people in the role.',
+        'content' => 'The SOS button and fall detection give guards constant on-the-job safety — support that helps keep good people in the role.',
         'icon'    => '<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9.5 12c0-1 .8-1.8 1.8-1.8.6 0 1 .3 1.2.7.2-.4.6-.7 1.2-.7 1 0 1.8.8 1.8 1.8 0 1.4-1.5 2.6-3 3.6-1.5-1-3-2.2-3-3.6z"/>',
-    ],
-    [
-        'title'   => 'Instant Threat Detection',
-        'content' => 'Sudden movement, a struggle, or a suspected fall at the post triggers an immediate alert — not just a missed check-in.',
-        'icon'    => '<circle cx="12" cy="12" r="9"/><path d="M13 7l-4 6h3l-1 4 5-6h-3z" fill="#0070f3" stroke="none"/>',
-    ],
-    [
-        'title'   => 'Guaranteed Post Coverage',
-        'content' => 'Confirms not just that a guard showed up, but that they stayed alert at their post for the entire shift.',
-        'icon'    => '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>',
     ],
 ];
 
@@ -279,7 +275,7 @@ $use_cases = [
             'device_url'  => $in_sense_render_url,
             'bg_path'     => $bg_sleep_chart_path,
             'bg_url'      => $bg_sleep_chart_url,
-            'anchor'      => '#in-sense-how-it-works',
+            'anchor'      => '#meet-in-sense',
             'zoomed'      => true,
         ],
     ];
@@ -287,6 +283,7 @@ $use_cases = [
     <section id="platform-overview" class="platform-overview-section">
         <div class="container">
             <h2>Two Tools, One Platform</h2>
+            <p class="section-subtitle">Two purpose-built devices, each solving a different problem — both able to feed into a single Control Center that can bring their handling together.</p>
             <div class="platform-overview-grid">
                 <?php foreach ( $platform_tiles as $tile ) : ?>
                     <div class="platform-tile">
@@ -388,7 +385,7 @@ $use_cases = [
 
             <?php if ( $in_guard_product_url ) : ?>
                 <div class="device-specs-footnote">
-                    <a href="<?php echo esc_url( $in_guard_product_url ); ?>" class="cta-link-secondary">See full spec sheet<span class="cta-arrow">→</span></a>
+                    <a href="<?php echo esc_url( $in_guard_product_url ); ?>" class="cta-link-secondary">See full IN Guard spec sheet<span class="cta-arrow">→</span></a>
                 </div>
             <?php endif; ?>
         </div>
@@ -397,7 +394,7 @@ $use_cases = [
     <section id="control-center" class="security-how">
         <div class="container">
             <h2>Inside the Control Center</h2>
-            <p class="security-how-intro">One piece of software, running on your own machine — no external server, no subscription fees, and even the map works fully offline. The same Control Center will also surface IN Sense alerts, right alongside your patrol data — meet IN Sense next.</p>
+            <p class="security-how-intro">One piece of software, running on your own machine — no external server, no cloud dependency, and even the map works fully offline. The same Control Center will also surface IN Sense alerts, right alongside your patrol data — meet IN Sense next.</p>
 
             <div class="feature-showcase">
                 <?php foreach ( $control_center_features as $i => $feature ) : ?>
@@ -461,6 +458,12 @@ $use_cases = [
                             <li><?php echo wp_kses( $point, array( 'strong' => array() ) ); ?></li>
                         <?php endforeach; ?>
                     </ul>
+
+                    <?php if ( $in_sense_product_url ) : ?>
+                        <div class="device-specs-footnote">
+                            <a href="<?php echo esc_url( $in_sense_product_url ); ?>" class="cta-link-secondary">See full IN Sense spec sheet<span class="cta-arrow">→</span></a>
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="device-usage-media">
                     <?php if ( file_exists( $in_sense_booth_path ) ) : ?>
@@ -475,8 +478,8 @@ $use_cases = [
 
     <section class="security-how sample-chart-section">
         <div class="container">
-            <h2>From Alert to Drowsy — Captured in a Single Chart</h2>
-            <p class="security-how-intro">A real breathing measurement, recorded end to end by IN Sense — the same signal your Control Center would catch.</p>
+            <h2>From Alert to Drowsy: Captured in a Single Chart</h2>
+            <p class="security-how-intro">A real breathing measurement, recorded end to end by IN Sense.</p>
 
             <?php if ( file_exists( $bg_sleep_chart_path ) ) : ?>
                 <img src="<?php echo esc_url( $bg_sleep_chart_url ); ?>" alt="Sample respiration rate chart, alert to drowsy" class="feature-screenshot sample-chart-image">
