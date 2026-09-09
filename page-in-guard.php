@@ -1,11 +1,14 @@
 <?php
 /*
- * Template Name: IN Guard 01 Product Card
+ * Template Name: IN Guard Product Card
  *
  * Zdjęcie mniejsze, osobno po lewej; po prawej kafelek z nazwą, tabelami
  * specyfikacji (nie pełne zdania) i dwa linki na końcu.
  * To osobny, zwięzły zestaw danych — nie to samo co przystępne, opisowe
  * in_guard_specs() z functions.php używane w sekcji "The Hardware".
+ *
+ * JĘZYK (2026-09-09): stringi idą przez in_security_t() (inc/i18n.php),
+ * tak samo jak front-page.php.
  */
 get_header();
 
@@ -15,29 +18,28 @@ $render_url  = get_template_directory_uri() . '/assets/images/in-guard-side-rend
 $charger_path = get_template_directory() . '/assets/images/in-guard-charger.png';
 $charger_url  = get_template_directory_uri() . '/assets/images/in-guard-charger.png';
 
-// [PLACEHOLDER] — uzupełnić konkretami o stacji dokującej.
 $charger_points = [
-    'Single device: 5V ±5%, 500mA',
-    'Docking station: 5V ±5%, 1500mA',
+    in_security_t( 'guard_card_charger_point_1', get_the_ID() ),
+    in_security_t( 'guard_card_charger_point_2', get_the_ID() ),
 ];
 
 $spec_table = [
-    [ 'Connectivity', 'LoRaWAN, 868 MHz ISM band, AES-128 encryption' ],
-    [ 'Positioning', 'Multi-constellation GNSS (GPS, GLONASS, Galileo, BeiDou)' ],
-    [ 'Timestamp Accuracy', 'Derived directly from GNSS — precise, satellite-synchronized time on every recorded point, used for analytics instead of server receive time' ],
-    [ 'Update Interval', 'Every 15 seconds (customizable)' ],
-    [ 'On-Device Storage', 'Up to 500 points' ],
-    [ 'Battery Life', 'Up to 8 hours of continuous patrol use' ],
-    [ 'Charging', 'USB-C, or docking station (3 units at once)' ],
-    [ 'Single Button', 'Power on; short press sends a priority alarm to the control room; long press (~2s) powers off — reset device' ],
-    [ 'Fall Detection', 'Auto-alert after 20s motionless & horizontal, repeats every 60s until resolved — disabled while charging' ],
-    [ 'Carry Recommendation', 'User pocket, or clipped to a lanyard; avoid metal shielding for the best signal' ],
-    [ 'Operating Temperature', '-5°C to +40°C' ],
-    [ 'Base Station Link', 'Wi-Fi, LTE, or wired Ethernet — fully on-premise' ],
-    [ 'Map Data', 'Served entirely offline — no internet connection required' ],
-    [ 'Checkpoint Verification', 'Every visit automatically classified as early, on-time, late, or missed' ],
-    [ 'Scalability', 'Up to 200 trackers per base station; additional base stations can be added to cover more terrain' ],
-    [ 'Status Indicator', 'Built-in LED shows the device\'s current status' ],
+    [ in_security_t( 'guard_card_spec_1_label', get_the_ID() ), in_security_t( 'guard_card_spec_1_value', get_the_ID() ) ],
+    [ in_security_t( 'guard_card_spec_2_label', get_the_ID() ), in_security_t( 'guard_card_spec_2_value', get_the_ID() ) ],
+    [ in_security_t( 'guard_card_spec_3_label', get_the_ID() ), in_security_t( 'guard_card_spec_3_value', get_the_ID() ) ],
+    [ in_security_t( 'guard_card_spec_4_label', get_the_ID() ), in_security_t( 'guard_card_spec_4_value', get_the_ID() ) ],
+    [ in_security_t( 'guard_card_spec_5_label', get_the_ID() ), in_security_t( 'guard_card_spec_5_value', get_the_ID() ) ],
+    [ in_security_t( 'guard_card_spec_6_label', get_the_ID() ), in_security_t( 'guard_card_spec_6_value', get_the_ID() ) ],
+    [ in_security_t( 'guard_card_spec_7_label', get_the_ID() ), in_security_t( 'guard_card_spec_7_value', get_the_ID() ) ],
+    [ in_security_t( 'guard_card_spec_8_label', get_the_ID() ), in_security_t( 'guard_card_spec_8_value', get_the_ID() ) ],
+    [ in_security_t( 'guard_card_spec_9_label', get_the_ID() ), in_security_t( 'guard_card_spec_9_value', get_the_ID() ) ],
+    [ in_security_t( 'guard_card_spec_10_label', get_the_ID() ), in_security_t( 'guard_card_spec_10_value', get_the_ID() ) ],
+    [ in_security_t( 'guard_card_spec_11_label', get_the_ID() ), in_security_t( 'guard_card_spec_11_value', get_the_ID() ) ],
+    [ in_security_t( 'guard_card_spec_12_label', get_the_ID() ), in_security_t( 'guard_card_spec_12_value', get_the_ID() ) ],
+    [ in_security_t( 'guard_card_spec_13_label', get_the_ID() ), in_security_t( 'guard_card_spec_13_value', get_the_ID() ) ],
+    [ in_security_t( 'guard_card_spec_14_label', get_the_ID() ), in_security_t( 'guard_card_spec_14_value', get_the_ID() ) ],
+    [ in_security_t( 'guard_card_spec_15_label', get_the_ID() ), in_security_t( 'guard_card_spec_15_value', get_the_ID() ) ],
+    [ in_security_t( 'guard_card_spec_16_label', get_the_ID() ), in_security_t( 'guard_card_spec_16_value', get_the_ID() ) ],
 ];
 ?>
 
@@ -49,7 +51,7 @@ $spec_table = [
                     <?php if ( file_exists( $render_path ) ) : ?>
                         <img src="<?php echo esc_url( $render_url ); ?>" alt="IN Guard 01 tracker" class="in-guard-render">
                     <?php else : ?>
-                        <div class="in-guard-render-placeholder">IN Guard 01 render<br><span>coming soon</span></div>
+                        <div class="in-guard-render-placeholder"><?php echo esc_html( in_security_t( 'guard_card_render_placeholder', get_the_ID() ) ); ?><br><span><?php echo esc_html( in_security_t( 'label_coming_soon' ) ); ?></span></div>
                     <?php endif; ?>
                 </div>
 
@@ -73,7 +75,7 @@ $spec_table = [
                 <div class="in-guard-accessory">
                     <img src="<?php echo esc_url( $charger_url ); ?>" alt="IN Guard 01 docking station" class="in-guard-accessory-image">
                     <div class="in-guard-accessory-body">
-                        <p><strong>Charging:</strong> individually (USB-C), or use a docking station for simultaneous charging of up to 3 IN Guard 01 units.</p>
+                        <p><?php echo wp_kses( in_security_t( 'guard_card_charger_intro', get_the_ID() ), array( 'strong' => array() ) ); ?></p>
                         <ul class="in-guard-accessory-list">
                             <?php foreach ( $charger_points as $point ) : ?>
                                 <li><?php echo esc_html( $point ); ?></li>
@@ -84,8 +86,8 @@ $spec_table = [
             <?php endif; ?>
 
             <div class="in-guard-bottom-links">
-                <a href="<?php echo esc_url( home_url( '/#how-it-works' ) ); ?>">Read how it works</a>
-                <a href="https://indoornavi.me/#contact" target="_blank" rel="noopener noreferrer">Get in touch</a>
+                <a href="<?php echo esc_url( home_url( '/#how-it-works' ) ); ?>"><?php echo esc_html( in_security_t( 'product_card_link_how_it_works' ) ); ?></a>
+                <a href="https://indoornavi.me/#contact" target="_blank" rel="noopener noreferrer"><?php echo esc_html( in_security_t( 'product_card_link_contact' ) ); ?></a>
             </div>
         </div>
     </section>

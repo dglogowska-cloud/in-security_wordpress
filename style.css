@@ -205,6 +205,37 @@ nav a:hover {
     color: var(--canva-blue);
 }
 
+/* Przełącznik EN/PL — ten sam wzorzec co na indoornavi.me (.lang-switch),
+   przekolorowany pod ciemny, półprzezroczysty header in-security (tam tło
+   jasne, tekst ciemny — tu odwrotnie). */
+.lang-switch {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.lang-switch-link {
+    text-decoration: none !important;
+    color: rgba(255, 255, 255, 0.55) !important;
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.lang-switch-link.is-active {
+    color: #ffffff !important;
+}
+
+.lang-switch-link:hover {
+    color: var(--canva-blue) !important;
+}
+
+.lang-switch-separator {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.85rem;
+}
+
 /* Rozwijane menu pod "Product Card" (IN Guard / IN Sense) — czysto CSS,
    otwiera się na hover. Na mobile (patrz breakpoint 768px niżej) staje się
    zwykłą, zawsze widoczną, wciętą listą w pionowym panelu — hover nie ma
@@ -2293,6 +2324,14 @@ nav a:hover {
         padding: 8px 0;
     }
 
+    .lang-switch {
+        margin-top: 10px;
+    }
+
+    .lang-switch-link {
+        font-size: 1.1rem !important;
+    }
+
     /* Animacja hamburgera w znak X po otwarciu */
     .mobile-menu-btn.active span:nth-child(1) {
         transform: translateY(9px) rotate(45deg);
@@ -3872,6 +3911,7 @@ nav a:hover {
     flex: 1 1 0;
     min-width: 0;
     text-align: left;
+    padding-bottom: 18px;
 }
 
 .how-it-works-steps .roadmap-connect-line {

@@ -31,11 +31,11 @@
                             <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.28 2.38 4.28 5.47v6.27zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z" />
                         </svg>
                     </a>
-                    <p>© <?php echo date( 'Y' ); ?> IndoorNavi. All rights reserved.</p>
+                    <p>© <?php echo date( 'Y' ); ?> <?php echo esc_html( in_security_t( 'footer_rights' ) ); ?></p>
                     <div class="legal-links">
-                        <a href="<?php echo esc_url( home_url( '/privacy-policy/' ) ); ?>">Privacy Policy</a>
+                        <a href="<?php echo esc_url( home_url( '/privacy-policy/' ) ); ?>"><?php echo esc_html( in_security_t( 'footer_privacy_policy' ) ); ?></a>
                         <span class="legal-separator">|</span>
-                        <a href="<?php echo esc_url( home_url( '/cookie-policy/' ) ); ?>">Cookie Policy</a>
+                        <a href="<?php echo esc_url( home_url( '/cookie-policy/' ) ); ?>"><?php echo esc_html( in_security_t( 'footer_cookie_policy' ) ); ?></a>
                     </div>
                 </div>
             </div>
@@ -43,12 +43,12 @@
         </div>
 
         <nav class="footer-nav">
-            <a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a>
-            <a href="<?php echo esc_url( home_url( '/in-guard/' ) ); ?>">IN Guard</a>
-            <a href="<?php echo esc_url( home_url( '/in-sense/' ) ); ?>">IN Sense</a>
-            <a href="https://indoornavi.me/#branches" target="_blank" rel="noopener noreferrer">Other products</a>
-            <a href="https://indoornavi.me/#contact" target="_blank" rel="noopener noreferrer">Contact</a>
-            <a href="https://indoornavi.me/blog/" target="_blank" rel="noopener noreferrer">Blog</a>
+            <a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php echo esc_html( in_security_t( 'nav_home' ) ); ?></a>
+            <a href="<?php echo esc_url( home_url( '/in-guard/' ) ); ?>"><?php echo esc_html( in_security_t( 'nav_in_guard' ) ); ?></a>
+            <a href="<?php echo esc_url( home_url( '/in-sense/' ) ); ?>"><?php echo esc_html( in_security_t( 'nav_in_sense' ) ); ?></a>
+            <a href="https://indoornavi.me/#branches" target="_blank" rel="noopener noreferrer"><?php echo esc_html( in_security_t( 'nav_other_products' ) ); ?></a>
+            <a href="https://indoornavi.me/#contact" target="_blank" rel="noopener noreferrer"><?php echo esc_html( in_security_t( 'nav_contact' ) ); ?></a>
+            <a href="https://indoornavi.me/blog/" target="_blank" rel="noopener noreferrer"><?php echo esc_html( in_security_t( 'nav_blog' ) ); ?></a>
         </nav>
     </div>
 </footer>

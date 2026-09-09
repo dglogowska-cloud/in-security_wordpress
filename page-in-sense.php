@@ -13,6 +13,9 @@
  * Tabela specyfikacji nie zawiera parametrów zasilania/IP ratingu — nie mamy
  * jeszcze twardych liczb dla tych pól (ten sam brak flagowany w in-vitals'
  * wersji tej karty). Do uzupełnienia, gdy będą dostępne.
+ *
+ * JĘZYK (2026-09-09): stringi idą przez in_security_t() (inc/i18n.php),
+ * tak samo jak front-page.php.
  */
 get_header();
 
@@ -22,19 +25,19 @@ $render_path = get_template_directory() . '/assets/images/in-sense-render.png';
 $render_url  = get_template_directory_uri() . '/assets/images/in-sense-render.png';
 
 $spec_table = [
-    [ 'Measurement Principle', 'Radar-based distance measurement to the body, detecting chest micro-movements associated with breathing' ],
-    [ 'Sensing Range', '1-3 meters' ],
-    [ 'Guard Contact', 'None — no wearable bands, no cables on the guard\'s body' ],
-    [ 'Visual Privacy', 'No cameras, no microphones, no image analysis — nothing is ever recorded or watched' ],
-    [ 'Mounting Options', 'Ceiling mount, boom arm, or mobile stand — moves between booths or posts' ],
-    [ 'Data Transmission', 'Wireless (Wi-Fi) to the Control Center' ],
-    [ 'Alert Behavior', 'Graduated — a discreet wake-up signal first, immediate escalation to the Control Center on sudden movement or a suspected fall' ],
-    [ 'Shift Handover Detection', 'Registers when shifts change hands, and flags it if anyone unexpected enters the post' ],
-    [ 'Compared to Motion Sensors', 'More reliable than PIR sensors, which lose accuracy without large movement and are easy to defeat' ],
-    [ 'Processing', '100% on-premise — no cloud, no external server' ],
-    [ 'Monitoring Coverage', 'Continuous, one sensor per post' ],
-    [ 'Integration Roadmap', 'Machine-learning-based fatigue prediction and behavior profiling' ],
-    [ 'Ideal For', 'Guard booths, gatehouses, monitoring and control rooms, critical infrastructure posts' ],
+    [ in_security_t( 'sense_card_spec_1_label', get_the_ID() ), in_security_t( 'sense_card_spec_1_value', get_the_ID() ) ],
+    [ in_security_t( 'sense_card_spec_2_label', get_the_ID() ), in_security_t( 'sense_card_spec_2_value', get_the_ID() ) ],
+    [ in_security_t( 'sense_card_spec_3_label', get_the_ID() ), in_security_t( 'sense_card_spec_3_value', get_the_ID() ) ],
+    [ in_security_t( 'sense_card_spec_4_label', get_the_ID() ), in_security_t( 'sense_card_spec_4_value', get_the_ID() ) ],
+    [ in_security_t( 'sense_card_spec_5_label', get_the_ID() ), in_security_t( 'sense_card_spec_5_value', get_the_ID() ) ],
+    [ in_security_t( 'sense_card_spec_6_label', get_the_ID() ), in_security_t( 'sense_card_spec_6_value', get_the_ID() ) ],
+    [ in_security_t( 'sense_card_spec_7_label', get_the_ID() ), in_security_t( 'sense_card_spec_7_value', get_the_ID() ) ],
+    [ in_security_t( 'sense_card_spec_8_label', get_the_ID() ), in_security_t( 'sense_card_spec_8_value', get_the_ID() ) ],
+    [ in_security_t( 'sense_card_spec_9_label', get_the_ID() ), in_security_t( 'sense_card_spec_9_value', get_the_ID() ) ],
+    [ in_security_t( 'sense_card_spec_10_label', get_the_ID() ), in_security_t( 'sense_card_spec_10_value', get_the_ID() ) ],
+    [ in_security_t( 'sense_card_spec_11_label', get_the_ID() ), in_security_t( 'sense_card_spec_11_value', get_the_ID() ) ],
+    [ in_security_t( 'sense_card_spec_12_label', get_the_ID() ), in_security_t( 'sense_card_spec_12_value', get_the_ID() ) ],
+    [ in_security_t( 'sense_card_spec_13_label', get_the_ID() ), in_security_t( 'sense_card_spec_13_value', get_the_ID() ) ],
 ];
 ?>
 
@@ -46,7 +49,7 @@ $spec_table = [
                     <?php if ( file_exists( $render_path ) ) : ?>
                         <img src="<?php echo esc_url( $render_url ); ?>" alt="IN Sense sensor" class="in-guard-render">
                     <?php else : ?>
-                        <div class="in-guard-render-placeholder">IN Sense render<br><span>coming soon</span></div>
+                        <div class="in-guard-render-placeholder"><?php echo esc_html( in_security_t( 'label_in_sense_render', get_the_ID() ) ); ?><br><span><?php echo esc_html( in_security_t( 'label_coming_soon' ) ); ?></span></div>
                     <?php endif; ?>
                 </div>
 
@@ -67,8 +70,8 @@ $spec_table = [
             </div>
 
             <div class="in-guard-bottom-links">
-                <a href="<?php echo esc_url( home_url( '/#meet-in-sense' ) ); ?>">Read how it works</a>
-                <a href="https://indoornavi.me/#contact" target="_blank" rel="noopener noreferrer">Get in touch</a>
+                <a href="<?php echo esc_url( home_url( '/#meet-in-sense' ) ); ?>"><?php echo esc_html( in_security_t( 'product_card_link_how_it_works' ) ); ?></a>
+                <a href="https://indoornavi.me/#contact" target="_blank" rel="noopener noreferrer"><?php echo esc_html( in_security_t( 'product_card_link_contact' ) ); ?></a>
             </div>
         </div>
     </section>
