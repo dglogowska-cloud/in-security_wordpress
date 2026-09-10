@@ -37,7 +37,6 @@ $spec_table = [
     [ in_security_t( 'sense_card_spec_10_label', get_the_ID() ), in_security_t( 'sense_card_spec_10_value', get_the_ID() ) ],
     [ in_security_t( 'sense_card_spec_11_label', get_the_ID() ), in_security_t( 'sense_card_spec_11_value', get_the_ID() ) ],
     [ in_security_t( 'sense_card_spec_12_label', get_the_ID() ), in_security_t( 'sense_card_spec_12_value', get_the_ID() ) ],
-    [ in_security_t( 'sense_card_spec_13_label', get_the_ID() ), in_security_t( 'sense_card_spec_13_value', get_the_ID() ) ],
 ];
 ?>
 

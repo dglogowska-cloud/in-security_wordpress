@@ -305,7 +305,7 @@ $use_cases = [
                             <?php endif; ?>
                         </div>
                         <h3><?php echo esc_html( $tile['title'] ); ?></h3>
-                        <p><?php echo esc_html( $tile['content'] ); ?></p>
+                        <p><?php echo wp_kses( $tile['content'], array( 'strong' => array() ) ); ?></p>
                         <a href="<?php echo esc_attr( $tile['anchor'] ); ?>" class="cta-link-secondary"><?php echo esc_html( sprintf( in_security_t( 'hub_cta_template' ), $tile['title'] ) ); ?><span class="cta-arrow">→</span></a>
                     </div>
                 <?php endforeach; ?>
