@@ -24,20 +24,38 @@ get_header();
 $render_path = get_template_directory() . '/assets/images/in-sense-render.png';
 $render_url  = get_template_directory_uri() . '/assets/images/in-sense-render.png';
 
-$spec_table = [
-    [ in_security_t( 'sense_card_spec_1_label', get_the_ID() ), in_security_t( 'sense_card_spec_1_value', get_the_ID() ) ],
-    [ in_security_t( 'sense_card_spec_2_label', get_the_ID() ), in_security_t( 'sense_card_spec_2_value', get_the_ID() ) ],
-    [ in_security_t( 'sense_card_spec_3_label', get_the_ID() ), in_security_t( 'sense_card_spec_3_value', get_the_ID() ) ],
-    [ in_security_t( 'sense_card_spec_4_label', get_the_ID() ), in_security_t( 'sense_card_spec_4_value', get_the_ID() ) ],
-    [ in_security_t( 'sense_card_spec_5_label', get_the_ID() ), in_security_t( 'sense_card_spec_5_value', get_the_ID() ) ],
-    [ in_security_t( 'sense_card_spec_6_label', get_the_ID() ), in_security_t( 'sense_card_spec_6_value', get_the_ID() ) ],
-    [ in_security_t( 'sense_card_spec_7_label', get_the_ID() ), in_security_t( 'sense_card_spec_7_value', get_the_ID() ) ],
-    [ in_security_t( 'sense_card_spec_8_label', get_the_ID() ), in_security_t( 'sense_card_spec_8_value', get_the_ID() ) ],
-    [ in_security_t( 'sense_card_spec_9_label', get_the_ID() ), in_security_t( 'sense_card_spec_9_value', get_the_ID() ) ],
-    [ in_security_t( 'sense_card_spec_10_label', get_the_ID() ), in_security_t( 'sense_card_spec_10_value', get_the_ID() ) ],
-    [ in_security_t( 'sense_card_spec_11_label', get_the_ID() ), in_security_t( 'sense_card_spec_11_value', get_the_ID() ) ],
-    [ in_security_t( 'sense_card_spec_12_label', get_the_ID() ), in_security_t( 'sense_card_spec_12_value', get_the_ID() ) ],
-];
+// Od Etapu 3 (2026-09-14): jeśli CPT "product_spec" (wp-admin: Narzędzia →
+// Karty produktów — wiersze specyfikacji) ma choć jeden wpis z product=in_sense,
+// dane idą stamtąd; w przeciwnym razie hardkodowana treść jako rezerwa.
+$product_spec_posts = get_posts( [
+    'post_type'      => 'product_spec',
+    'posts_per_page' => -1,
+    'orderby'        => 'menu_order',
+    'order'          => 'ASC',
+    'meta_key'       => 'product',
+    'meta_value'     => 'in_sense',
+] );
+
+if ( ! empty( $product_spec_posts ) ) {
+    $spec_table = array_map( function ( $post ) {
+        return [ in_security_field( 'label', $post->ID ), in_security_field( 'value', $post->ID ) ];
+    }, $product_spec_posts );
+} else {
+    $spec_table = [
+        [ in_security_t( 'sense_card_spec_1_label', get_the_ID() ), in_security_t( 'sense_card_spec_1_value', get_the_ID() ) ],
+        [ in_security_t( 'sense_card_spec_2_label', get_the_ID() ), in_security_t( 'sense_card_spec_2_value', get_the_ID() ) ],
+        [ in_security_t( 'sense_card_spec_3_label', get_the_ID() ), in_security_t( 'sense_card_spec_3_value', get_the_ID() ) ],
+        [ in_security_t( 'sense_card_spec_4_label', get_the_ID() ), in_security_t( 'sense_card_spec_4_value', get_the_ID() ) ],
+        [ in_security_t( 'sense_card_spec_5_label', get_the_ID() ), in_security_t( 'sense_card_spec_5_value', get_the_ID() ) ],
+        [ in_security_t( 'sense_card_spec_6_label', get_the_ID() ), in_security_t( 'sense_card_spec_6_value', get_the_ID() ) ],
+        [ in_security_t( 'sense_card_spec_7_label', get_the_ID() ), in_security_t( 'sense_card_spec_7_value', get_the_ID() ) ],
+        [ in_security_t( 'sense_card_spec_8_label', get_the_ID() ), in_security_t( 'sense_card_spec_8_value', get_the_ID() ) ],
+        [ in_security_t( 'sense_card_spec_9_label', get_the_ID() ), in_security_t( 'sense_card_spec_9_value', get_the_ID() ) ],
+        [ in_security_t( 'sense_card_spec_10_label', get_the_ID() ), in_security_t( 'sense_card_spec_10_value', get_the_ID() ) ],
+        [ in_security_t( 'sense_card_spec_11_label', get_the_ID() ), in_security_t( 'sense_card_spec_11_value', get_the_ID() ) ],
+        [ in_security_t( 'sense_card_spec_12_label', get_the_ID() ), in_security_t( 'sense_card_spec_12_value', get_the_ID() ) ],
+    ];
+}
 ?>
 
 <main class="in-guard-page">
@@ -69,7 +87,7 @@ $spec_table = [
             </div>
 
             <div class="in-guard-bottom-links">
-                <a href="<?php echo esc_url( home_url( '/#meet-in-sense' ) ); ?>"><?php echo esc_html( in_security_t( 'product_card_link_how_it_works' ) ); ?></a>
+                <a href="<?php echo esc_url( in_security_lang_url( home_url( '/#meet-in-sense' ) ) ); ?>"><?php echo esc_html( in_security_t( 'product_card_link_how_it_works' ) ); ?></a>
                 <a href="https://indoornavi.me/#contact" target="_blank" rel="noopener noreferrer"><?php echo esc_html( in_security_t( 'product_card_link_contact' ) ); ?></a>
             </div>
         </div>

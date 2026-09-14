@@ -38,6 +38,55 @@ function in_security_maybe_set_language_cookie() {
 }
 add_action( 'init', 'in_security_maybe_set_language_cookie' );
 
+// Ciasteczko samo w sobie nie wystarcza, gdy hosting cache'uje całe strony —
+// cache różnicuje po adresie URL, nie po ciasteczku odwiedzającego, więc
+// zapisana wersja strony "zamraża" język, w jakim akurat ją zbudowano,
+// niezależnie od preferencji kolejnego gościa. Dlatego każdy wewnętrzny link
+// (menu, stopka, karty produktów) musi nieść język w samym adresie — owijamy
+// go tą funkcją zamiast polegać wyłącznie na cookie. Dla domyślnego 'en' nie
+// dokładamy parametru, żeby nie zaśmiecać adresów w podstawowej wersji.
+function in_security_lang_url( $url ) {
+    $lang = in_security_get_language();
+
+    if ( 'en' === $lang ) {
+        return $url;
+    }
+
+    return add_query_arg( 'site_lang', $lang, $url );
+}
+
+// Czyta parę pól ACF "{$base_key}_en"/"{$base_key}_pl" z konkretnego wpisu
+// (CPT-y z inc/cpts.php: outcome, use_case, device_spec, control_feature,
+// how_step, product_spec) w aktualnym języku sesji, z fallbackiem do en,
+// gdyby ktoś zostawił puste pole pl. Odpowiednik in_security_t(), tylko dla
+// pól ACF na konkretnym wpisie zamiast wpisów w in_security_strings().
+function in_security_field( $base_key, $post_id ) {
+    if ( ! function_exists( 'get_field' ) ) {
+        return '';
+    }
+
+    $lang  = in_security_get_language();
+    $value = get_field( $base_key . '_' . $lang, $post_id );
+
+    if ( empty( $value ) && 'en' !== $lang ) {
+        $value = get_field( $base_key . '_en', $post_id );
+    }
+
+    return $value ?: '';
+}
+
+// Pobiera stringa dla KONKRETNEGO języka, niezależnie od tego, jaki język
+// ma aktywny bieżący odwiedzający — w odróżnieniu od in_security_t(), która
+// zawsze idzie za aktualną sesją. Używane w inc/seed-content.php: import
+// treści musi zapisać ZARÓWNO wersję en, JAK i pl na raz, więc nie może
+// polegać na tym, jaki język akurat ma włączony administrator klikający
+// przycisk importu.
+function in_security_t_lang( $key, $lang ) {
+    $strings = in_security_strings();
+
+    return $strings[ $lang ][ $key ] ?? $strings['en'][ $key ] ?? $key;
+}
+
 // $post_id domyślnie to front page — podanie innego ID (np. get_the_ID() na
 // page-in-guard.php/page-in-sense.php) pozwoli w przyszłości czytać pola
 // ACF przypięte do tamtej konkretnej strony, nie do strony głównej.

@@ -53,12 +53,12 @@
 
         <nav>
             <ul>
-                <li><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php echo esc_html( in_security_t( 'nav_home' ) ); ?></a></li>
+                <li><a href="<?php echo esc_url( in_security_lang_url( home_url( '/' ) ) ); ?>"><?php echo esc_html( in_security_t( 'nav_home' ) ); ?></a></li>
                 <li class="nav-dropdown">
-                    <a href="<?php echo esc_url( home_url( '/in-guard/' ) ); ?>"><?php echo esc_html( in_security_t( 'nav_product_card' ) ); ?></a>
+                    <a href="<?php echo esc_url( in_security_lang_url( home_url( '/in-guard/' ) ) ); ?>"><?php echo esc_html( in_security_t( 'nav_product_card' ) ); ?></a>
                     <ul class="nav-dropdown-menu">
-                        <li><a href="<?php echo esc_url( home_url( '/in-guard/' ) ); ?>"><?php echo esc_html( in_security_t( 'nav_in_guard' ) ); ?></a></li>
-                        <li><a href="<?php echo esc_url( home_url( '/in-sense/' ) ); ?>"><?php echo esc_html( in_security_t( 'nav_in_sense' ) ); ?></a></li>
+                        <li><a href="<?php echo esc_url( in_security_lang_url( home_url( '/in-guard/' ) ) ); ?>"><?php echo esc_html( in_security_t( 'nav_in_guard' ) ); ?></a></li>
+                        <li><a href="<?php echo esc_url( in_security_lang_url( home_url( '/in-sense/' ) ) ); ?>"><?php echo esc_html( in_security_t( 'nav_in_sense' ) ); ?></a></li>
                     </ul>
                 </li>
                 <li><a href="https://indoornavi.me/#branches" target="_blank" rel="noopener noreferrer"><?php echo esc_html( in_security_t( 'nav_other_products' ) ); ?></a></li>

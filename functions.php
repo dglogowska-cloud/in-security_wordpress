@@ -1,5 +1,9 @@
 <?php
 require_once get_template_directory() . '/inc/i18n.php';
+require_once get_template_directory() . '/inc/icons.php';
+require_once get_template_directory() . '/inc/cpts.php';
+require_once get_template_directory() . '/inc/acf-fields.php';
+require_once get_template_directory() . '/inc/seed-content.php';
 
 // Funkcja ładująca główne style motywu
 function indoornavi_enqueue_styles() {
@@ -85,26 +89,42 @@ function ins_accent( $escaped_text ) {
 
 // Specyfikacja urządzenia IN Guard — współdzielona między front-page.php
 // (sekcja "The Hardware") a page-in-guard.php (karta produktu), żeby nie
-// trzymać tej samej treści w dwóch miejscach.
+// trzymać tej samej treści w dwóch miejscach. Od Etapu 3 (2026-09-14): jeśli
+// CPT "device_spec" (wp-admin: Narzędzia → IN Guard: The Hardware — karty)
+// ma choć jeden wpis, dane idą stamtąd; w przeciwnym razie hardkodowana
+// treść poniżej jako rezerwa. 'number' nie jest już przechowywane —
+// numeruje się z kolejności w pętli renderującej.
 function in_guard_specs() {
+    $posts = get_posts( [
+        'post_type'      => 'device_spec',
+        'posts_per_page' => -1,
+        'orderby'        => 'menu_order',
+        'order'          => 'ASC',
+    ] );
+
+    if ( ! empty( $posts ) ) {
+        return array_map( function ( $post ) {
+            return [
+                'title'   => in_security_field( 'title', $post->ID ),
+                'content' => in_security_field( 'content', $post->ID ),
+            ];
+        }, $posts );
+    }
+
     return [
         [
-            'number'  => '01',
             'title'   => in_security_t( 'guard_spec_1_title' ),
             'content' => in_security_t( 'guard_spec_1_content' ),
         ],
         [
-            'number'  => '02',
             'title'   => in_security_t( 'guard_spec_2_title' ),
             'content' => in_security_t( 'guard_spec_2_content' ),
         ],
         [
-            'number'  => '03',
             'title'   => in_security_t( 'guard_spec_3_title' ),
             'content' => in_security_t( 'guard_spec_3_content' ),
         ],
         [
-            'number'  => '04',
             'title'   => in_security_t( 'guard_spec_4_title' ),
             'content' => in_security_t( 'guard_spec_4_content' ),
         ],

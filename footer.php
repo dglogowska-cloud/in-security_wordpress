@@ -43,9 +43,9 @@
         </div>
 
         <nav class="footer-nav">
-            <a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php echo esc_html( in_security_t( 'nav_home' ) ); ?></a>
-            <a href="<?php echo esc_url( home_url( '/in-guard/' ) ); ?>"><?php echo esc_html( in_security_t( 'nav_in_guard' ) ); ?></a>
-            <a href="<?php echo esc_url( home_url( '/in-sense/' ) ); ?>"><?php echo esc_html( in_security_t( 'nav_in_sense' ) ); ?></a>
+            <a href="<?php echo esc_url( in_security_lang_url( home_url( '/' ) ) ); ?>"><?php echo esc_html( in_security_t( 'nav_home' ) ); ?></a>
+            <a href="<?php echo esc_url( in_security_lang_url( home_url( '/in-guard/' ) ) ); ?>"><?php echo esc_html( in_security_t( 'nav_in_guard' ) ); ?></a>
+            <a href="<?php echo esc_url( in_security_lang_url( home_url( '/in-sense/' ) ) ); ?>"><?php echo esc_html( in_security_t( 'nav_in_sense' ) ); ?></a>
             <a href="https://indoornavi.me/#branches" target="_blank" rel="noopener noreferrer"><?php echo esc_html( in_security_t( 'nav_other_products' ) ); ?></a>
             <a href="https://indoornavi.me/#contact" target="_blank" rel="noopener noreferrer"><?php echo esc_html( in_security_t( 'nav_contact' ) ); ?></a>
             <a href="https://indoornavi.me/blog/" target="_blank" rel="noopener noreferrer"><?php echo esc_html( in_security_t( 'nav_blog' ) ); ?></a>

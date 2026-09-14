@@ -80,106 +80,167 @@ $device_usage_points = [
     in_security_t( 'guard_pocket_point_5' ),
 ];
 
-$how_it_works = [
-    [
-        'number'  => '01',
-        'title'   => in_security_t( 'step_1_title' ),
-        'content' => in_security_t( 'step_1_content' ),
-        'icon'    => '<path d="M12 21s7-7.58 7-12A7 7 0 1 0 5 9c0 4.42 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/>',
-    ],
-    [
-        'number'  => '02',
-        'title'   => in_security_t( 'step_2_title' ),
-        'content' => in_security_t( 'step_2_content' ),
-        'icon'    => '<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/>',
-    ],
-    [
-        'number'  => '03',
-        'title'   => in_security_t( 'step_3_title' ),
-        'content' => in_security_t( 'step_3_content' ),
-        'icon'    => '<path d="M8.5 15.5a5 5 0 0 1 0-7"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M5.5 18.5a9 9 0 0 1 0-13"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/><circle cx="12" cy="12" r="1.6" fill="#0070f3" stroke="none"/>',
-    ],
-    [
-        'number'  => '04',
-        'title'   => in_security_t( 'step_4_title' ),
-        'content' => in_security_t( 'step_4_content' ),
-        'icon'    => '<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/>',
-    ],
-    [
-        'number'  => '05',
-        'title'   => in_security_t( 'step_5_title' ),
-        'content' => in_security_t( 'step_5_content' ),
-        'icon'    => '<path d="M4 19V5M4 19h16"/><path d="M7 15l4-4 3 3 5-6"/>',
-    ],
-];
+// Od Etapu 3 (2026-09-14) te listy mogą pochodzić z CPT-ów zarządzanych z
+// wp-admina (patrz inc/cpts.php) — jeśli dany CPT ma choć jeden wpis, dane
+// idą stamtąd; dopóki jest pusty (przed jednorazowym importem z
+// inc/seed-content.php, albo gdyby ktoś go wyczyścił), używamy dotychczasowej
+// hardkodowanej treści jako rezerwy, żeby strona nigdy nie pokazała pustej
+// sekcji. 'number' w krokach nie jest już przechowywane w danych — liczy się
+// z kolejności w pętli renderującej (index + 1).
+$how_step_posts = get_posts( [
+    'post_type'      => 'how_step',
+    'posts_per_page' => -1,
+    'orderby'        => 'menu_order',
+    'order'          => 'ASC',
+] );
+
+if ( ! empty( $how_step_posts ) ) {
+    $how_it_works = array_map( function ( $post ) {
+        return [
+            'title'   => in_security_field( 'title', $post->ID ),
+            'content' => in_security_field( 'content', $post->ID ),
+            'icon'    => in_security_get_icon_svg( get_field( 'icon', $post->ID ) ),
+        ];
+    }, $how_step_posts );
+} else {
+    $how_it_works = [
+        [
+            'title'   => in_security_t( 'step_1_title' ),
+            'content' => in_security_t( 'step_1_content' ),
+            'icon'    => '<path d="M12 21s7-7.58 7-12A7 7 0 1 0 5 9c0 4.42 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/>',
+        ],
+        [
+            'title'   => in_security_t( 'step_2_title' ),
+            'content' => in_security_t( 'step_2_content' ),
+            'icon'    => '<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/>',
+        ],
+        [
+            'title'   => in_security_t( 'step_3_title' ),
+            'content' => in_security_t( 'step_3_content' ),
+            'icon'    => '<path d="M8.5 15.5a5 5 0 0 1 0-7"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M5.5 18.5a9 9 0 0 1 0-13"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/><circle cx="12" cy="12" r="1.6" fill="#0070f3" stroke="none"/>',
+        ],
+        [
+            'title'   => in_security_t( 'step_4_title' ),
+            'content' => in_security_t( 'step_4_content' ),
+            'icon'    => '<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/>',
+        ],
+        [
+            'title'   => in_security_t( 'step_5_title' ),
+            'content' => in_security_t( 'step_5_content' ),
+            'icon'    => '<path d="M4 19V5M4 19h16"/><path d="M7 15l4-4 3 3 5-6"/>',
+        ],
+    ];
+}
 
 // Treść w <strong> renderuje się pogrubiona — wypisywana przez wp_kses
 // (nie esc_html), więc bezpiecznie przepuszcza tylko ten jeden tag.
 // Tablica żyje w functions.php (in_guard_specs()), bo ta sama specyfikacja
-// pojawia się też na karcie produktu page-in-guard.php.
+// pojawia się też na karcie produktu page-in-guard.php. in_guard_specs() ma
+// tę samą logikę CPT+fallback w środku (CPT device_spec).
 $device_specs = in_guard_specs();
 
-// Zrzuty ekranu z oprogramowania — dopóki plik nie istnieje w assets/images/,
-// pokazuje się placeholder 16:9 zamiast pustej kolumny.
-$control_center_features = [
-    [
-        'tag'     => in_security_t( 'feature_1_tag' ),
-        'title'   => in_security_t( 'feature_1_title' ),
-        'content' => in_security_t( 'feature_1_content' ),
-        'file'    => 'control-center-live-view.png',
-    ],
-    [
-        'tag'     => in_security_t( 'feature_2_tag' ),
-        'title'   => in_security_t( 'feature_2_title' ),
-        'content' => in_security_t( 'feature_2_content' ),
-        'file'    => 'control-center-route-editor.png',
-    ],
-    [
-        'tag'     => in_security_t( 'feature_3_tag' ),
-        'title'   => in_security_t( 'feature_3_title' ),
-        'content' => in_security_t( 'feature_3_content' ),
-        'file'    => 'control-center-archive.png',
-    ],
-];
+// Zrzuty ekranu z oprogramowania — 'screenshot_url' to gotowy, pełny URL
+// (z ACF image field przy CPT, albo zbudowany tu z assets/images/ dla
+// rezerwowej treści) albo pusty string, gdy pliku brak — szablon nie musi
+// już sam sprawdzać file_exists().
+$control_feature_posts = get_posts( [
+    'post_type'      => 'control_feature',
+    'posts_per_page' => -1,
+    'orderby'        => 'menu_order',
+    'order'          => 'ASC',
+] );
+
+if ( ! empty( $control_feature_posts ) ) {
+    $control_center_features = array_map( function ( $post ) {
+        return [
+            'tag'            => in_security_field( 'tag', $post->ID ),
+            'title'          => in_security_field( 'title', $post->ID ),
+            'content'        => in_security_field( 'content', $post->ID ),
+            'screenshot_url' => get_field( 'screenshot', $post->ID ) ?: '',
+        ];
+    }, $control_feature_posts );
+} else {
+    $fallback_features = [
+        [
+            'tag'     => in_security_t( 'feature_1_tag' ),
+            'title'   => in_security_t( 'feature_1_title' ),
+            'content' => in_security_t( 'feature_1_content' ),
+            'file'    => 'control-center-live-view.png',
+        ],
+        [
+            'tag'     => in_security_t( 'feature_2_tag' ),
+            'title'   => in_security_t( 'feature_2_title' ),
+            'content' => in_security_t( 'feature_2_content' ),
+            'file'    => 'control-center-route-editor.png',
+        ],
+        [
+            'tag'     => in_security_t( 'feature_3_tag' ),
+            'title'   => in_security_t( 'feature_3_title' ),
+            'content' => in_security_t( 'feature_3_content' ),
+            'file'    => 'control-center-archive.png',
+        ],
+    ];
+
+    $control_center_features = array_map( function ( $feature ) use ( $tiles_dir ) {
+        $screenshot_path = get_template_directory() . '/assets/images/' . $feature['file'];
+        $feature['screenshot_url'] = file_exists( $screenshot_path ) ? $tiles_dir . $feature['file'] : '';
+        unset( $feature['file'] );
+        return $feature;
+    }, $fallback_features );
+}
 
 // Kafle korzyści — celowo mówią o efekcie (compliance, mniej pominiętych
 // obchodów, decyzje kadrowe), nie o mechanizmie, żeby nie dublować sekcji
 // wyżej. Proste ikony zamiast zdjęć. Dwa ostatnie dotyczą IN Sense.
-// Skompresowane z 9 do 6 kafli (2026-09-09) — łączy blisko powiązane pary
-// (compliance+coverage, missed rounds+instant alerts, dashboard+integracje),
-// żeby sekcja czytała się szybciej. Żaden fakt nie zniknął, tylko się połączył.
-$outcomes = [
-    [
-        'title'   => in_security_t( 'outcome_1_title' ),
-        'content' => in_security_t( 'outcome_1_content' ),
-        'icon'    => '<rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/>',
-    ],
-    [
-        'title'   => in_security_t( 'outcome_2_title' ),
-        'content' => in_security_t( 'outcome_2_content' ),
-        'icon'    => '<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>',
-    ],
-    [
-        'title'   => in_security_t( 'outcome_3_title' ),
-        'content' => in_security_t( 'outcome_3_content' ),
-        'icon'    => '<rect x="5" y="12" width="3" height="8"/><rect x="10.5" y="8" width="3" height="12"/><rect x="16" y="4" width="3" height="16"/>',
-    ],
-    [
-        'title'   => in_security_t( 'outcome_4_title' ),
-        'content' => in_security_t( 'outcome_4_content' ),
-        'icon'    => '<path d="M4 8h2l1.5-2h9L18 8h2a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.2"/><path d="M2 2l20 20"/>',
-    ],
-    [
-        'title'   => in_security_t( 'outcome_5_title' ),
-        'content' => in_security_t( 'outcome_5_content' ),
-        'icon'    => '<circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7.5 7.5L10.5 16.5M16.5 7.5L13.5 16.5M8 6h8"/>',
-    ],
-    [
-        'title'   => in_security_t( 'outcome_6_title' ),
-        'content' => in_security_t( 'outcome_6_content' ),
-        'icon'    => '<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9.5 12c0-1 .8-1.8 1.8-1.8.6 0 1 .3 1.2.7.2-.4.6-.7 1.2-.7 1 0 1.8.8 1.8 1.8 0 1.4-1.5 2.6-3 3.6-1.5-1-3-2.2-3-3.6z"/>',
-    ],
-];
+$outcome_posts = get_posts( [
+    'post_type'      => 'outcome',
+    'posts_per_page' => -1,
+    'orderby'        => 'menu_order',
+    'order'          => 'ASC',
+] );
+
+if ( ! empty( $outcome_posts ) ) {
+    $outcomes = array_map( function ( $post ) {
+        return [
+            'title'   => in_security_field( 'title', $post->ID ),
+            'content' => in_security_field( 'content', $post->ID ),
+            'icon'    => in_security_get_icon_svg( get_field( 'icon', $post->ID ) ),
+        ];
+    }, $outcome_posts );
+} else {
+    $outcomes = [
+        [
+            'title'   => in_security_t( 'outcome_1_title' ),
+            'content' => in_security_t( 'outcome_1_content' ),
+            'icon'    => '<rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/>',
+        ],
+        [
+            'title'   => in_security_t( 'outcome_2_title' ),
+            'content' => in_security_t( 'outcome_2_content' ),
+            'icon'    => '<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>',
+        ],
+        [
+            'title'   => in_security_t( 'outcome_3_title' ),
+            'content' => in_security_t( 'outcome_3_content' ),
+            'icon'    => '<rect x="5" y="12" width="3" height="8"/><rect x="10.5" y="8" width="3" height="12"/><rect x="16" y="4" width="3" height="16"/>',
+        ],
+        [
+            'title'   => in_security_t( 'outcome_4_title' ),
+            'content' => in_security_t( 'outcome_4_content' ),
+            'icon'    => '<path d="M4 8h2l1.5-2h9L18 8h2a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.2"/><path d="M2 2l20 20"/>',
+        ],
+        [
+            'title'   => in_security_t( 'outcome_5_title' ),
+            'content' => in_security_t( 'outcome_5_content' ),
+            'icon'    => '<circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7.5 7.5L10.5 16.5M16.5 7.5L13.5 16.5M8 6h8"/>',
+        ],
+        [
+            'title'   => in_security_t( 'outcome_6_title' ),
+            'content' => in_security_t( 'outcome_6_content' ),
+            'icon'    => '<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9.5 12c0-1 .8-1.8 1.8-1.8.6 0 1 .3 1.2.7.2-.4.6-.7 1.2-.7 1 0 1.8.8 1.8 1.8 0 1.4-1.5 2.6-3 3.6-1.5-1-3-2.2-3-3.6z"/>',
+        ],
+    ];
+}
 
 // IN Sense — drugie narzędzie platformy. Ten sam fizyczny czujnik radarowy co
 // w IN Vitals (in-vitals.me), inny kontekst: tam pacjent w łóżku, tu strażnik
@@ -219,22 +280,35 @@ $sample_chart_points = [
     in_security_t( 'chart_point_3' ),
 ];
 
-$use_cases = [
-    in_security_t( 'use_case_1' ),
-    in_security_t( 'use_case_2' ),
-    in_security_t( 'use_case_3' ),
-    in_security_t( 'use_case_4' ),
-    in_security_t( 'use_case_5' ),
-    in_security_t( 'use_case_6' ),
-    in_security_t( 'use_case_7' ),
-    in_security_t( 'use_case_8' ),
-    in_security_t( 'use_case_9' ),
-    in_security_t( 'use_case_10' ),
-    in_security_t( 'use_case_11' ),
-    in_security_t( 'use_case_12' ),
-    in_security_t( 'use_case_13' ),
-    in_security_t( 'use_case_14' ),
-];
+$use_case_posts = get_posts( [
+    'post_type'      => 'use_case',
+    'posts_per_page' => -1,
+    'orderby'        => 'menu_order',
+    'order'          => 'ASC',
+] );
+
+if ( ! empty( $use_case_posts ) ) {
+    $use_cases = array_map( function ( $post ) {
+        return in_security_field( 'label', $post->ID );
+    }, $use_case_posts );
+} else {
+    $use_cases = [
+        in_security_t( 'use_case_1' ),
+        in_security_t( 'use_case_2' ),
+        in_security_t( 'use_case_3' ),
+        in_security_t( 'use_case_4' ),
+        in_security_t( 'use_case_5' ),
+        in_security_t( 'use_case_6' ),
+        in_security_t( 'use_case_7' ),
+        in_security_t( 'use_case_8' ),
+        in_security_t( 'use_case_9' ),
+        in_security_t( 'use_case_10' ),
+        in_security_t( 'use_case_11' ),
+        in_security_t( 'use_case_12' ),
+        in_security_t( 'use_case_13' ),
+        in_security_t( 'use_case_14' ),
+    ];
+}
 ?>
 
 <main class="security-page">
@@ -350,7 +424,7 @@ $use_cases = [
             <div class="roadmap-wrapper-context how-it-works-steps">
                 <div class="roadmap-connect-line"></div>
                 <div class="roadmap-wrapper">
-                    <?php foreach ( $how_it_works as $step ) : ?>
+                    <?php foreach ( $how_it_works as $i => $step ) : ?>
                         <div class="step-card">
                             <div class="step-header">
                                 <span class="step-icon-small">
@@ -358,7 +432,7 @@ $use_cases = [
                                         <?php echo $step['icon']; ?>
                                     </svg>
                                 </span>
-                                <span class="step-number"><?php echo esc_html( in_security_t( 'label_step_prefix' ) ); ?> <?php echo esc_html( $step['number'] ); ?></span>
+                                <span class="step-number"><?php echo esc_html( in_security_t( 'label_step_prefix' ) ); ?> <?php echo esc_html( sprintf( '%02d', $i + 1 ) ); ?></span>
                             </div>
                             <div class="step-body">
                                 <h3><?php echo esc_html( $step['title'] ); ?></h3>
@@ -379,9 +453,9 @@ $use_cases = [
             </p>
 
             <div class="device-specs-grid">
-                <?php foreach ( $device_specs as $spec ) : ?>
+                <?php foreach ( $device_specs as $i => $spec ) : ?>
                     <div class="device-spec-card">
-                        <div class="number"><?php echo esc_html( $spec['number'] ); ?></div>
+                        <div class="number"><?php echo esc_html( sprintf( '%02d', $i + 1 ) ); ?></div>
                         <h3><?php echo esc_html( $spec['title'] ); ?></h3>
                         <p><?php echo wp_kses( $spec['content'], array( 'strong' => array() ) ); ?></p>
                     </div>
@@ -390,7 +464,7 @@ $use_cases = [
 
             <?php if ( $in_guard_product_url ) : ?>
                 <div class="device-specs-footnote">
-                    <a href="<?php echo esc_url( $in_guard_product_url ); ?>" class="cta-link-secondary"><?php echo esc_html( in_security_t( 'guard_hardware_footnote_cta' ) ); ?><span class="cta-arrow">→</span></a>
+                    <a href="<?php echo esc_url( in_security_lang_url( $in_guard_product_url ) ); ?>" class="cta-link-secondary"><?php echo esc_html( in_security_t( 'guard_hardware_footnote_cta' ) ); ?><span class="cta-arrow">→</span></a>
                 </div>
             <?php endif; ?>
         </div>
@@ -403,11 +477,10 @@ $use_cases = [
 
             <div class="feature-showcase">
                 <?php foreach ( $control_center_features as $i => $feature ) : ?>
-                    <?php $screenshot_path = get_template_directory() . '/assets/images/' . $feature['file']; ?>
                     <div class="feature-row <?php echo ( $i % 2 === 1 ) ? 'feature-row-reverse' : ''; ?>">
                         <div class="feature-media">
-                            <?php if ( file_exists( $screenshot_path ) ) : ?>
-                                <img src="<?php echo esc_url( $tiles_dir . $feature['file'] ); ?>" alt="<?php echo esc_attr( $feature['title'] ); ?> screenshot" class="feature-screenshot">
+                            <?php if ( ! empty( $feature['screenshot_url'] ) ) : ?>
+                                <img src="<?php echo esc_url( $feature['screenshot_url'] ); ?>" alt="<?php echo esc_attr( $feature['title'] ); ?> screenshot" class="feature-screenshot">
                             <?php else : ?>
                                 <div class="feature-placeholder"><?php echo esc_html( $feature['title'] ); ?><br><span><?php echo esc_html( in_security_t( 'label_screenshot_coming_soon' ) ); ?></span></div>
                             <?php endif; ?>
@@ -466,7 +539,7 @@ $use_cases = [
 
                     <?php if ( $in_sense_product_url ) : ?>
                         <div class="device-specs-footnote">
-                            <a href="<?php echo esc_url( $in_sense_product_url ); ?>" class="cta-link-secondary"><?php echo esc_html( in_security_t( 'sense_hardware_footnote_cta' ) ); ?><span class="cta-arrow">→</span></a>
+                            <a href="<?php echo esc_url( in_security_lang_url( $in_sense_product_url ) ); ?>" class="cta-link-secondary"><?php echo esc_html( in_security_t( 'sense_hardware_footnote_cta' ) ); ?><span class="cta-arrow">→</span></a>
                         </div>
                     <?php endif; ?>
                 </div>
